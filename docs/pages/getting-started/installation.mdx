@@ -1,0 +1,80 @@
+# Installation
+
+## NPM
+
+```bash
+npm install flo-table-with-views
+```
+
+## Yarn
+
+```bash
+yarn add flo-table-with-views
+```
+
+## PNPM
+
+```bash
+pnpm add flo-table-with-views
+```
+
+## Peer Dependencies
+
+FloTable with Views requires these peer dependencies to be installed in your project:
+
+```bash
+npm install react react-dom antd @ant-design/pro-components
+```
+
+### Version Requirements
+
+- **React**: >=16.8.0
+- **React DOM**: >=16.8.0  
+- **Ant Design**: >=5.0.0
+- **Pro Components**: >=2.0.0
+
+## Next.js Setup
+
+If you're using Next.js, you'll need to configure Ant Design properly for SSR:
+
+```bash
+npm install @ant-design/nextjs-registry
+```
+
+Then update your `layout.tsx`:
+
+```tsx
+import { AntdRegistry } from '@ant-design/nextjs-registry';
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>
+        <AntdRegistry>{children}</AntdRegistry>
+      </body>
+    </html>
+  );
+}
+```
+
+## CSS Setup
+
+Import Ant Design styles in your main CSS file or `_app.tsx`:
+
+```css
+@import '~antd/dist/reset.css';
+```
+
+For Next.js App Router, add to your `globals.css`:
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Ant Design styles will be automatically injected */
+```

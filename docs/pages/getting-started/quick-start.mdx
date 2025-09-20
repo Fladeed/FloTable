@@ -1,0 +1,222 @@
+# Quick Start
+
+Get up and running with FloTable with Views in minutes.
+
+## Basic Example
+
+Here's a minimal example to get you started:
+
+```tsx
+import { TableWithViews, ProColumns } from 'flo-table-with-views';
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  status: 'active' | 'inactive';
+  createdAt: string;
+}
+
+const columns: ProColumns<User>[] = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+  },
+  {
+    title: 'Email',
+    dataIndex: 'email',
+    key: 'email',
+  },
+  {
+    title: 'Status',
+    dataIndex: 'status',
+    key: 'status',
+    render: (_, record) => (
+      <Tag color={record.status === 'active' ? 'green' : 'red'}>
+        {record.status}
+      </Tag>
+    ),
+  },
+];
+
+const views = [
+  {
+    key: 'all',
+    label: 'All Users',
+    shortLabel: 'All',
+    query: '',
+    filters: {},
+  },
+  {
+    key: 'active',
+    label: 'Active Users',
+    shortLabel: 'Active',
+    query: 'status:active',
+    filters: { status: 'active' },
+  },
+  {
+    key: 'inactive',
+    label: 'Inactive Users',
+    shortLabel: 'Inactive',
+    query: 'status:inactive',
+    filters: { status: 'inactive' },
+  },
+];
+
+export default function UserTable() {
+  const handleRequest = async (params: any, sort: any, filter: any) => {
+    // Simulate API call
+    const mockUsers: User[] = [
+      {
+        id: '1',
+        name: 'John Doe',
+        email: 'john@example.com',
+        status: 'active',
+        createdAt: '2024-01-15T10:30:00Z',
+      },
+      {
+        id: '2',
+        name: 'Jane Smith',
+        email: 'jane@example.com',
+        status: 'inactive',
+        createdAt: '2024-01-10T14:20:00Z',
+      },
+    ];
+
+    // Apply filters
+    let filteredUsers = mockUsers;
+    if (filter.filters?.status) {
+      filteredUsers = mockUsers.filter(user => user.status === filter.filters.status);
+    }
+
+    // Apply pagination
+    const { current = 1, pageSize = 10 } = params;
+    const start = (current - 1) * pageSize;
+    const end = start + pageSize;
+
+    return {
+      data: filteredUsers.slice(start, end),
+      success: true,
+      total: filteredUsers.length,
+    };
+  };
+
+  return (
+    <TableWithViews<User>
+      id="user-table"
+      title="User Management"
+      description="Manage your application users"
+      columns={columns}
+      request={handleRequest}
+      views={views}
+      rowKey="id"
+    />
+  );
+}
+```
+
+## Key Concepts
+
+### 1. **Data Type Definition**
+
+Define your data structure with TypeScript for type safety:
+
+```tsx
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  status: 'active' | 'inactive';
+  createdAt: string;
+}
+```
+
+### 2. **Column Configuration**
+
+Use Ant Design Pro Components column definitions:
+
+```tsx
+const columns: ProColumns<User>[] = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+    sorter: true, // Enable sorting
+  },
+  {
+    title: 'Status',
+    dataIndex: 'status',
+    key: 'status',
+    render: (_, record) => (
+      // Custom render function
+      <Tag color={record.status === 'active' ? 'green' : 'red'}>
+        {record.status}
+      </Tag>
+    ),
+    filters: [
+      { text: 'Active', value: 'active' },
+      { text: 'Inactive', value: 'inactive' },
+    ],
+  },
+];
+```
+
+### 3. **Views Definition**
+
+Create different filtered views of your data:
+
+```tsx
+const views = [
+  {
+    key: 'all',
+    label: 'All Users',        // Full label for desktop
+    shortLabel: 'All',         // Short label for mobile
+    query: '',                 // Search query (optional)
+    filters: {},               // Applied filters
+  },
+  {
+    key: 'active',
+    label: 'Active Users',
+    shortLabel: 'Active',
+    query: 'status:active',
+    filters: { status: 'active' }, // This gets passed to your request function
+  },
+];
+```
+
+### 4. **Request Function**
+
+Handle data fetching with filtering and pagination:
+
+```tsx
+const handleRequest = async (params: any, sort: any, filter: any) => {
+  // params contains: current, pageSize, keyword
+  // sort contains: field, order
+  // filter contains: filters (from views), plus any column filters
+
+  const response = await fetch('/api/users', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      ...params,
+      ...filter.filters, // View filters
+      sort,
+    }),
+  });
+
+  const data = await response.json();
+
+  return {
+    data: data.users,
+    success: true,
+    total: data.total,
+  };
+};
+```
+
+## Next Steps
+
+- Learn about [API Reference](/api/table-with-views) for all available props
+- Check out more [Examples](/examples/basic-usage)
+- Read about [Customization](/guides/customization) options

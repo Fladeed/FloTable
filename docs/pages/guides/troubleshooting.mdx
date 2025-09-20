@@ -1,0 +1,454 @@
+# Troubleshooting
+
+Common issues and their solutions when using FloTable with Views.
+
+## Common Issues
+
+### 1. Data Not Loading
+
+**Problem**: Table shows empty state even when data should be available.
+
+**Possible Causes**:
+- Request function returns incorrect format
+- Network errors not handled properly
+- Async/await issues
+
+**Solutions**:
+
+```tsx
+// ✅ Correct request function format
+const handleRequest = async (params: any, sort: any, filter: any) => {
+  try {
+    const response = await fetch('/api/data');
+    const data = await response.json();
+    
+    // Must return this exact format
+    return {
+      data: data.items || [], // Array of items
+      success: true,         // Boolean indicating success
+      total: data.total || 0, // Total count for pagination
+    };
+  } catch (error) {
+    console.error('Request failed:', error);
+    return {
+      data: [],
+      success: false,
+      total: 0,
+    };
+  }
+};
+```
+
+**Debug Steps**:
+1. Check browser network tab for API calls
+2. Verify response format matches expected structure
+3. Add console.log to request function to debug data flow
+
+### 2. Views Not Filtering Correctly
+
+**Problem**: Clicking on views doesn't filter the data as expected.
+
+**Common Mistakes**:
+
+```tsx
+// ❌ Wrong: Filters not applied in request function
+const handleRequest = async (params: any, sort: any, filter: any) => {
+  const response = await fetch('/api/data');
+  const data = await response.json();
+  
+  // Missing: filter.filters application
+  return {
+    data: data.items,
+    success: true,
+    total: data.total,
+  };
+};
+
+// ✅ Correct: Apply filters from views
+const handleRequest = async (params: any, sort: any, filter: any) => {
+  const queryParams = {
+    ...params,
+    ...filter.filters, // Apply view filters
+    sort,
+  };
+  
+  const response = await fetch('/api/data', {
+    method: 'POST',
+    body: JSON.stringify(queryParams),
+  });
+  
+  const data = await response.json();
+  return {
+    data: data.items,
+    success: true,
+    total: data.total,
+  };
+};
+```
+
+**Debug Steps**:
+1. Log the `filter` parameter in your request function
+2. Verify `filter.filters` contains expected values
+3. Check that your API applies these filters correctly
+
+### 3. TypeScript Errors
+
+**Problem**: TypeScript compilation errors with column definitions.
+
+**Common Issues**:
+
+```tsx
+// ❌ Wrong: Missing type parameter
+const columns: ProColumns[] = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+  },
+];
+
+// ✅ Correct: Proper type parameter
+interface User {
+  id: string;
+  name: string;
+  email: string;
+}
+
+const columns: ProColumns<User>[] = [
+  {
+    title: 'Name',
+    dataIndex: 'name', // TypeScript knows this is valid
+    key: 'name',
+  },
+];
+```
+
+**Solutions**:
+1. Always define proper interfaces for your data
+2. Use the correct generic type parameter for ProColumns
+3. Ensure render functions match the expected signature
+
+### 4. Mobile Layout Issues
+
+**Problem**: Table doesn't display properly on mobile devices.
+
+**Common Causes**:
+- Fixed column widths that don't work on small screens
+- Too many columns visible on mobile
+- Actions not accessible on touch devices
+
+**Solutions**:
+
+```tsx
+const { isMobile } = useIsMobile();
+
+const columns: ProColumns<User>[] = [
+  {
+    title: 'User',
+    dataIndex: 'name',
+    key: 'name',
+    // Responsive width
+    width: isMobile ? 150 : 200,
+    render: (text, record) => (
+      <div>
+        <div className="font-medium">{text}</div>
+        {/* Show additional info on mobile */}
+        {isMobile && (
+          <div className="text-sm text-gray-500">
+            {record.email}
+          </div>
+        )}
+      </div>
+    ),
+  },
+  // Hide less important columns on mobile
+  {
+    title: 'Email',
+    dataIndex: 'email',
+    key: 'email',
+    responsive: ['md'], // Only show on medium screens and up
+  },
+  {
+    title: 'Actions',
+    key: 'actions',
+    width: isMobile ? 60 : 100,
+    render: (_, record) => (
+      <Dropdown
+        trigger={['click']}
+        menu={{
+          items: [
+            { key: 'edit', label: 'Edit' },
+            { key: 'delete', label: 'Delete' },
+          ],
+        }}
+      >
+        <Button size="small" icon={<MoreOutlined />} />
+      </Dropdown>
+    ),
+  },
+];
+```
+
+### 5. Performance Issues
+
+**Problem**: Table is slow or unresponsive with large datasets.
+
+**Common Causes**:
+- Not implementing pagination correctly
+- Heavy render functions in columns
+- Missing memoization for expensive computations
+
+**Solutions**:
+
+```tsx
+import { useMemo, useCallback } from 'react';
+
+const UserTable = () => {
+  // Memoize columns to prevent recreation on every render
+  const columns = useMemo(() => [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Avatar',
+      dataIndex: 'avatar',
+      key: 'avatar',
+      render: useCallback((avatar, record) => (
+        <Avatar src={avatar} alt={record.name} />
+      ), []),
+    },
+  ], []);
+
+  // Implement proper pagination
+  const pagination = useMemo(() => ({
+    pageSize: 20, // Reasonable page size
+    showSizeChanger: true,
+    showQuickJumper: true,
+    showTotal: (total, range) =>
+      `${range[0]}-${range[1]} of ${total} items`,
+  }), []);
+
+  return (
+    <TableWithViews
+      columns={columns}
+      pagination={pagination}
+      // ... other props
+    />
+  );
+};
+```
+
+### 6. Search Not Working
+
+**Problem**: Search functionality doesn't filter results.
+
+**Debug Checklist**:
+
+```tsx
+const handleRequest = async (params: any, sort: any, filter: any) => {
+  console.log('Search params:', params); // Should contain 'keyword'
+  
+  const searchTerm = params.keyword || '';
+  
+  // Apply search to your API call
+  const queryParams = {
+    page: params.current,
+    pageSize: params.pageSize,
+    search: searchTerm, // Pass search term to API
+    ...filter.filters,
+  };
+  
+  // ... rest of request logic
+};
+```
+
+**Common Issues**:
+1. Not passing `keyword` from params to API
+2. API not implementing search correctly
+3. Search term not being applied to the correct fields
+
+### 7. Actions Not Working
+
+**Problem**: Custom actions in toolbar don't execute.
+
+**Debug Steps**:
+
+```tsx
+const actions = [
+  {
+    key: 'export',
+    label: 'Export',
+    icon: <DownloadOutlined />,
+    onClick: () => {
+      console.log('Export clicked'); // Add debug log
+      handleExport();
+    },
+  },
+];
+
+const handleExport = () => {
+  console.log('Export function called'); // Verify function is called
+  // Export logic
+};
+```
+
+**Common Issues**:
+1. onClick handler not properly bound
+2. Missing key prop for actions
+3. Action handler function has errors
+
+## Error Messages
+
+### "Cannot read property of undefined"
+
+This usually indicates data structure mismatch:
+
+```tsx
+// ❌ Wrong: Assuming nested data exists
+{
+  title: 'City',
+  dataIndex: ['location', 'city'], // Will fail if location is undefined
+  key: 'city',
+}
+
+// ✅ Correct: Safe access with optional chaining
+{
+  title: 'City',
+  dataIndex: 'location',
+  key: 'city',
+  render: (location) => location?.city || 'N/A',
+}
+```
+
+### "Warning: Each child in a list should have a unique key prop"
+
+Ensure your data has unique identifiers:
+
+```tsx
+<TableWithViews
+  rowKey="id" // Make sure each row has a unique 'id' field
+  // or use a function
+  rowKey={(record) => record.uuid || record.id}
+  // ... other props
+/>
+```
+
+### "Module not found" Errors
+
+Check your imports:
+
+```tsx
+// ✅ Correct imports
+import { TableWithViews } from 'flo-table-with-views';
+import type { ProColumns } from '@ant-design/pro-components';
+
+// Make sure you have the dependencies installed
+npm install @ant-design/pro-components antd
+```
+
+## Performance Debugging
+
+### Use React DevTools Profiler
+
+1. Install React DevTools browser extension
+2. Go to Profiler tab
+3. Record a session while interacting with the table
+4. Look for expensive renders or re-renders
+
+### Memory Leaks
+
+Watch for these common causes:
+
+```tsx
+// ❌ Wrong: Creating new objects in render
+<TableWithViews
+  pagination={{
+    pageSize: 20, // This creates a new object every render
+  }}
+/>
+
+// ✅ Correct: Use useMemo for objects
+const pagination = useMemo(() => ({
+  pageSize: 20,
+}), []);
+
+<TableWithViews
+  pagination={pagination}
+/>
+```
+
+### Network Performance
+
+Monitor API call patterns:
+
+1. Check browser Network tab
+2. Look for duplicate requests
+3. Verify pagination is working correctly
+4. Check if requests are properly debounced
+
+## Getting Help
+
+If you're still experiencing issues:
+
+1. **Check the Console**: Always check browser console for error messages
+2. **Verify Props**: Ensure all required props are provided correctly
+3. **Test with Minimal Example**: Create a minimal reproduction case
+4. **Check Dependencies**: Verify all peer dependencies are installed
+5. **Update Versions**: Make sure you're using compatible versions
+
+### Creating a Minimal Reproduction
+
+```tsx
+import { TableWithViews } from 'flo-table-with-views';
+import type { ProColumns } from '@ant-design/pro-components';
+
+interface TestData {
+  id: string;
+  name: string;
+}
+
+const columns: ProColumns<TestData>[] = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+  },
+];
+
+const views = [
+  {
+    key: 'all',
+    label: 'All',
+    shortLabel: 'All',
+    query: '',
+    filters: {},
+  },
+];
+
+const TestTable = () => {
+  const handleRequest = async () => {
+    return {
+      data: [{ id: '1', name: 'Test' }],
+      success: true,
+      total: 1,
+    };
+  };
+
+  return (
+    <TableWithViews
+      id="test-table"
+      title="Test Table"
+      columns={columns}
+      views={views}
+      request={handleRequest}
+      rowKey="id"
+    />
+  );
+};
+
+export default TestTable;
+```
+
+This minimal example can help isolate issues and provides a good starting point for debugging.

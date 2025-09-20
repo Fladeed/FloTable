@@ -1,0 +1,71 @@
+{
+    "name": "flo-table-with-views",
+    "version": "1.0.0",
+    "description": "A powerful, customizable table component with views, filters, and mobile support built on Ant Design Pro Components",
+    "main": "dist/index.js",
+    "module": "dist/index.esm.js",
+    "types": "dist/index.d.ts",
+    "files": [
+        "dist",
+        "src",
+        "README.md"
+    ],
+    "scripts": {
+        "build": "rollup -c",
+        "build:watch": "rollup -c -w",
+        "dev": "rollup -c -w",
+        "typecheck": "tsc --noEmit",
+        "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+        "lint:fix": "eslint src --ext ts,tsx --fix",
+        "clean": "rimraf dist"
+    },
+    "keywords": [
+        "react",
+        "table",
+        "antd",
+        "ant-design",
+        "pro-components",
+        "views",
+        "filters",
+        "responsive",
+        "typescript"
+    ],
+    "author": "Fladeed",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Fladeed/flo-table-with-views.git"
+    },
+    "bugs": {
+        "url": "https://github.com/Fladeed/flo-table-with-views/issues"
+    },
+    "homepage": "https://github.com/Fladeed/flo-table-with-views#readme",
+    "peerDependencies": {
+        "react": ">=16.8.0",
+        "react-dom": ">=16.8.0",
+        "antd": ">=5.0.0",
+        "@ant-design/pro-components": ">=2.0.0"
+    },
+    "dependencies": {
+        "clsx": "^2.0.0",
+        "tailwind-merge": "^2.0.0",
+        "react-icons": "^4.12.0"
+    },
+    "devDependencies": {
+        "@types/react": "^18.2.43",
+        "@types/react-dom": "^18.2.17",
+        "@typescript-eslint/eslint-plugin": "^6.14.0",
+        "@typescript-eslint/parser": "^6.14.0",
+        "@rollup/plugin-commonjs": "^25.0.7",
+        "@rollup/plugin-node-resolve": "^15.2.3",
+        "@rollup/plugin-typescript": "^11.1.5",
+        "eslint": "^8.55.0",
+        "eslint-plugin-react": "^7.33.2",
+        "eslint-plugin-react-hooks": "^4.6.0",
+        "rimraf": "^5.0.5",
+        "rollup": "^4.6.1",
+        "rollup-plugin-dts": "^6.1.0",
+        "rollup-plugin-peer-deps-external": "^2.2.4",
+        "typescript": "^5.2.2"
+    }
+}

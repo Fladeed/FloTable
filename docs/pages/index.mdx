@@ -1,0 +1,109 @@
+# FloTable with Views
+
+A powerful, customizable table component with views, filters, and mobile support built on Ant Design Pro Components.
+
+![FloTable Demo](https://via.placeholder.com/800x400/1890ff/ffffff?text=FloTable+Demo)
+
+## Features
+
+- 📊 **Multiple Views**: Create custom views with different filters and configurations
+- 📱 **Mobile Responsive**: Optimized for both desktop and mobile devices  
+- 🔍 **Advanced Filtering**: Built-in search, sort, and filter capabilities
+- ♾️ **Infinite Scroll**: Optional infinite scroll for large datasets
+- 🎨 **Customizable Actions**: Add custom action buttons with tooltips and dropdowns
+- 🌐 **Internationalization**: Built-in i18n support
+- 🎯 **TypeScript**: Full TypeScript support with proper type definitions
+- 🎪 **Ant Design**: Built on top of Ant Design Pro Components
+
+## Quick Start
+
+Install the package:
+
+```bash
+npm install flo-table-with-views
+# or
+yarn add flo-table-with-views
+```
+
+Basic usage:
+
+```tsx
+import { TableWithViews, ProColumns } from 'flo-table-with-views';
+
+interface DataType {
+  id: string;
+  name: string;
+  status: string;
+  createdAt: string;
+}
+
+const columns: ProColumns<DataType>[] = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+  },
+  {
+    title: 'Status',
+    dataIndex: 'status',
+    key: 'status',
+  },
+];
+
+const views = [
+  {
+    key: 'all',
+    label: 'All Items',
+    shortLabel: 'All',
+    query: '',
+    filters: {},
+  },
+  {
+    key: 'active',
+    label: 'Active Items',
+    shortLabel: 'Active',
+    query: 'status:active',
+    filters: { status: 'active' },
+  },
+];
+
+function MyTable() {
+  const request = async (params: any) => {
+    // Your data fetching logic here
+    const response = await fetch('/api/data', {
+      method: 'POST',
+      body: JSON.stringify(params),
+    });
+    const data = await response.json();
+    
+    return {
+      data: data.items,
+      success: true,
+      total: data.total,
+    };
+  };
+
+  return (
+    <TableWithViews
+      id="my-table"
+      title="My Data Table"
+      description="Manage your data with multiple views"
+      columns={columns}
+      request={request}
+      views={views}
+      rowKey="id"
+    />
+  );
+}
+```
+
+## Demo
+
+Check out our [live demo](http://localhost:3000) showcasing a restaurant management system built with FloTable components.
+
+## Next Steps
+
+- [Installation Guide](/getting-started/installation)
+- [API Reference](/api/table-with-views)
+- [Examples](/examples/basic-usage)
+- [Customization](/guides/customization)

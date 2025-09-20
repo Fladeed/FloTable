@@ -1,0 +1,348 @@
+# Customization
+
+Learn how to customize the appearance and behavior of your table components.
+
+## Styling
+
+### CSS Variables
+
+FloTable with Views uses CSS variables for easy theming:
+
+```css
+:root {
+  --flo-table-header-bg: #fafafa;
+  --flo-table-border-color: #d9d9d9;
+  --flo-table-border-radius: 6px;
+  --flo-table-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+}
+```
+
+### Custom CSS Classes
+
+Add custom styles with the `className` prop:
+
+```tsx
+<TableWithViews
+  className="custom-table"
+  // ... other props
+/>
+```
+
+```css
+.custom-table {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.custom-table .ant-pro-table-list-toolbar {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+```
+
+## Custom Actions
+
+### Table-Level Actions
+
+Add custom buttons to the table toolbar:
+
+```tsx
+const customActions = [
+  {
+    key: 'export',
+    label: 'Export CSV',
+    icon: <DownloadOutlined />,
+    onClick: () => {
+      // Export logic
+      console.log('Exporting data...');
+    },
+  },
+  {
+    key: 'import',
+    label: 'Import Data',
+    icon: <UploadOutlined />,
+    onClick: () => {
+      // Import logic
+      console.log('Importing data...');
+    },
+  },
+];
+
+<TableWithViews
+  actions={customActions}
+  // ... other props
+/>
+```
+
+### Row Actions
+
+Add actions for individual rows:
+
+```tsx
+const columns: ProColumns<User>[] = [
+  // ... other columns
+  {
+    title: 'Actions',
+    key: 'actions',
+    width: 100,
+    render: (_, record) => (
+      <Space>
+        <Button
+          type="link"
+          size="small"
+          onClick={() => handleEdit(record)}
+        >
+          Edit
+        </Button>
+        <Button
+          type="link"
+          size="small"
+          danger
+          onClick={() => handleDelete(record)}
+        >
+          Delete
+        </Button>
+      </Space>
+    ),
+  },
+];
+```
+
+## Custom Views
+
+### Dynamic Views
+
+Generate views dynamically based on data:
+
+```tsx
+const generateViews = (statuses: string[]) => {
+  const baseViews = [
+    {
+      key: 'all',
+      label: 'All Items',
+      shortLabel: 'All',
+      query: '',
+      filters: {},
+    },
+  ];
+
+  const statusViews = statuses.map(status => ({
+    key: status.toLowerCase(),
+    label: `${status} Items`,
+    shortLabel: status,
+    query: `status:${status}`,
+    filters: { status },
+  }));
+
+  return [...baseViews, ...statusViews];
+};
+
+const views = generateViews(['Active', 'Pending', 'Completed']);
+```
+
+### Views with Icons
+
+Add icons to your views:
+
+```tsx
+const views = [
+  {
+    key: 'all',
+    label: 'All Users',
+    shortLabel: 'All',
+    icon: <UsergroupAddOutlined />,
+    query: '',
+    filters: {},
+  },
+  {
+    key: 'active',
+    label: 'Active Users',
+    shortLabel: 'Active',
+    icon: <CheckCircleOutlined />,
+    query: 'status:active',
+    filters: { status: 'active' },
+  },
+];
+```
+
+## Mobile Optimization
+
+### Responsive Columns
+
+Configure columns to show/hide based on screen size:
+
+```tsx
+const columns: ProColumns<User>[] = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+    // Always visible
+  },
+  {
+    title: 'Email',
+    dataIndex: 'email',
+    key: 'email',
+    hideInTable: true, // Hidden on mobile by default
+    responsive: ['md'], // Show on medium screens and up
+  },
+  {
+    title: 'Created',
+    dataIndex: 'createdAt',
+    key: 'createdAt',
+    responsive: ['lg'], // Show on large screens only
+    render: (text) => new Date(text).toLocaleDateString(),
+  },
+];
+```
+
+### Mobile-Specific Views
+
+Create views optimized for mobile:
+
+```tsx
+const { isMobile } = useIsMobile();
+
+const views = isMobile ? [
+  {
+    key: 'all',
+    label: 'All',
+    shortLabel: 'All',
+    query: '',
+    filters: {},
+  },
+  {
+    key: 'recent',
+    label: 'Recent',
+    shortLabel: 'Recent',
+    query: 'recent:true',
+    filters: { recent: true },
+  },
+] : [
+  // Full desktop views
+  {
+    key: 'all',
+    label: 'All Users',
+    shortLabel: 'All',
+    query: '',
+    filters: {},
+  },
+  {
+    key: 'active',
+    label: 'Active Users',
+    shortLabel: 'Active',
+    query: 'status:active',
+    filters: { status: 'active' },
+  },
+  // ... more detailed views
+];
+```
+
+## Advanced Configuration
+
+### Custom Toolbar
+
+Replace the default toolbar with your own:
+
+```tsx
+<TableWithViews
+  toolbar={{
+    title: 'Custom Title',
+    subTitle: 'Custom subtitle',
+    actions: [
+      <Button key="custom" type="primary">
+        Custom Action
+      </Button>,
+    ],
+    settings: false, // Hide settings
+    search: {
+      placeholder: 'Search users...',
+      onSearch: (value) => console.log('Search:', value),
+    },
+  }}
+  // ... other props
+/>
+```
+
+### Custom Empty State
+
+Customize the empty state when no data is available:
+
+```tsx
+<TableWithViews
+  locale={{
+    emptyText: (
+      <div style={{ textAlign: 'center', padding: '40px' }}>
+        <Empty
+          image={Empty.PRESENTED_IMAGE_SIMPLE}
+          description="No users found"
+        >
+          <Button type="primary" onClick={() => console.log('Add user')}>
+            Add First User
+          </Button>
+        </Empty>
+      </div>
+    ),
+  }}
+  // ... other props
+/>
+```
+
+### Loading States
+
+Customize loading behavior:
+
+```tsx
+<TableWithViews
+  loading={isLoading}
+  loadingProps={{
+    spinning: isLoading,
+    tip: 'Loading users...',
+    size: 'large',
+  }}
+  // ... other props
+/>
+```
+
+## Performance Optimization
+
+### Pagination Configuration
+
+Optimize for large datasets:
+
+```tsx
+<TableWithViews
+  pagination={{
+    pageSize: 20,
+    showSizeChanger: true,
+    showQuickJumper: true,
+    showTotal: (total, range) =>
+      `${range[0]}-${range[1]} of ${total} items`,
+    pageSizeOptions: ['10', '20', '50', '100'],
+  }}
+  // ... other props
+/>
+```
+
+### Debounced Search
+
+Implement debounced search for better performance:
+
+```tsx
+import { useDebouncedCallback } from 'use-debounce';
+
+const [searchValue, setSearchValue] = useState('');
+
+const debouncedSearch = useDebouncedCallback(
+  (value: string) => {
+    // Trigger search
+    setSearchValue(value);
+  },
+  300 // 300ms delay
+);
+
+<TableWithViews
+  onSearch={debouncedSearch}
+  // ... other props
+/>
+```
