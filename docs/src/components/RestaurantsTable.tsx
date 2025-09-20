@@ -23,7 +23,7 @@ const restaurantColumns: ProColumns<Restaurant>[] = [
                 />
                 <div>
                     <div className="font-medium">{record.name}</div>
-                    <div className="text-sm text-gray-500">{record.cuisine}</div>
+                    <div className="text-sm opacity-60">{record.cuisine}</div>
                 </div>
             </div>
         ),

@@ -23,8 +23,8 @@ const menuItemColumns: ProColumns<MenuItem>[] = [
                 />
                 <div>
                     <div className="font-medium">{record.name}</div>
-                    <div className="text-sm text-gray-500 line-clamp-2">{record.description}</div>
-                    <div className="text-xs text-blue-600">{record.restaurantName}</div>
+                    <div className="text-sm opacity-60 line-clamp-2">{record.description}</div>
+                    <div className="text-xs text-blue-600 dark:text-blue-400">{record.restaurantName}</div>
                 </div>
             </div>
         ),

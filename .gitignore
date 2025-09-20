@@ -13,6 +13,10 @@ coverage/
 out/
 build/
 
+# Docusaurus
+docs-new/build/
+docs-new/.docusaurus/
+
 # Production builds
 dist/
 lib/

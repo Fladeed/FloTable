@@ -1,70 +1,41 @@
-# FloTable with Views - Unified Deployment
+# Website
 
-This directory contains the unified documentation and preview application for FloTable with Views.
+This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
 
-## Features
+## Installation
 
-- **📚 Complete Documentation**: Installation guides, API reference, best practices
-- **🎮 Live Preview**: Interactive demos with restaurant management examples  
-- **📱 Responsive Design**: Mobile-optimized with touch-friendly interactions
-- **🔍 Multiple Examples**: Different table configurations and use cases
+```bash
+yarn
+```
 
 ## Local Development
 
 ```bash
-npm install
-npm run dev
+yarn start
 ```
 
-The application will be available at `http://localhost:3001` (or the next available port).
+This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
 
-## Production Build
+## Build
 
 ```bash
-npm run build
-npm start
+yarn build
 ```
+
+This command generates static content into the `build` directory and can be served using any static contents hosting service.
 
 ## Deployment
 
-This application can be deployed to any platform that supports Next.js:
+Using SSH:
 
-- **Vercel**: Connect your repository and deploy automatically
-- **Netlify**: Use the build command `npm run build` 
-- **Docker**: Build with the included Dockerfile
-- **Static Export**: Use `npm run build` with `output: 'export'` in next.config.js
-
-## Environment Variables
-
-No environment variables are required for basic functionality. All data is mocked locally.
-
-## Structure
-
-```
-docs/
-├── app/                    # Next.js app router pages
-│   ├── page.tsx           # Landing page
-│   ├── docs/page.tsx      # Documentation
-│   ├── preview/page.tsx   # Live preview
-│   ├── examples/page.tsx  # Examples gallery
-│   └── layout.tsx         # Root layout
-├── src/                   # Demo components and data
-│   ├── components/        # Restaurant demo components
-│   ├── data/             # Mock data and API
-│   ├── types/            # TypeScript definitions
-│   └── utils/            # Utility functions
-└── public/               # Static assets
+```bash
+USE_SSH=true yarn deploy
 ```
 
-## Pages
+Not using SSH:
 
-1. **/** - Landing page with overview and quick start
-2. **/docs** - Complete documentation with API reference
-3. **/preview** - Interactive demos with restaurant tables
-4. **/examples** - Gallery of different use cases and code examples
+```bash
+GIT_USER=<Your GitHub username> yarn deploy
+```
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
