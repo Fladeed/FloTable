@@ -1,5 +1,5 @@
 import { ProColumns } from "@ant-design/pro-components";
-import { Card, Empty, Input, Modal, Tabs, TabsProps } from "antd";
+import { Card, Empty, Input, Modal, Tabs, TabsProps, Typography } from "antd";
 import { Key, useMemo, useState } from "react";
 import { SimpleTable, TableRequest } from "./SimpleTable";
 import { TableActionConfig, TableActions } from "./TableActions";
@@ -80,6 +80,7 @@ export function TableWithViews<T extends Record<string, any>>({
 }: TableWithViewsProps<T>) {
     const { t } = useTranslation();
     const isMobile = useIsMobile();
+    const { Title, Text } = Typography;
 
     const [viewsState, setViewsState] = useState<View[]>(views ?? []);
     const [activeKey, setActiveKey] = useState<string>(views?.[0]?.key || "default");
@@ -189,21 +190,25 @@ export function TableWithViews<T extends Record<string, any>>({
         <div className={cn("max-w-screen-2xl mx-auto space-y-4", className)}>
             {/* Header */}
             <div className={cn(isMobile ? "p-2" : "", headerClassName)}>
-                <h1 className={cn(
-                    "text-2xl font-bold",
-                    isMobile && "text-center",
-                    titleClassName
-                )}>
-                    {t(title, title)}
-                </h1>
-                {description && (
-                    <p className={cn(
-                        "mt-1",
+                <Title 
+                    level={1}
+                    className={cn(
                         isMobile && "text-center",
-                        descriptionClassName
-                    )}>
+                        titleClassName
+                    )}
+                >
+                    {t(title, title)}
+                </Title>
+                {description && (
+                    <Text 
+                        className={cn(
+                            "mt-1",
+                            isMobile && "text-center",
+                            descriptionClassName
+                        )}
+                    >
                         {t(description, description)}
-                    </p>
+                    </Text>
                 )}
             </div>
 

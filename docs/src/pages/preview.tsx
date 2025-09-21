@@ -3,7 +3,7 @@ import { Tabs } from 'antd';
 import Layout from '@theme/Layout';
 import RestaurantsTable from '../components/RestaurantsTable';
 import MenuItemsTable from '../components/MenuItemsTable';
-import 'antd/dist/reset.css';
+import { AntdConfigProvider } from '../components/AntdConfigProvider';
 
 export default function PreviewPage() {
     const items = [
@@ -33,15 +33,17 @@ export default function PreviewPage() {
                     </p>
                 </div>
 
-                <Tabs
-                    defaultActiveKey="restaurants"
-                    items={items}
-                    size="large"
-                    style={{
-                        padding: '1rem',
-                        borderRadius: '8px'
-                    }}
-                />
+                <AntdConfigProvider>
+                    <Tabs
+                        defaultActiveKey="restaurants"
+                        items={items}
+                        size="large"
+                        style={{
+                            padding: '1rem',
+                            borderRadius: '8px'
+                        }}
+                    />
+                </AntdConfigProvider>
             </div>
         </Layout>
     );
