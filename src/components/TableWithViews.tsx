@@ -6,6 +6,7 @@ import { TableActionConfig, TableActions } from "./TableActions";
 import { useIsMobile } from "../hooks/useIsMobile";
 import { useTranslation } from "../hooks/useTranslation";
 import { cn } from "../utils/cn";
+import { AntdConfigProvider } from "./AntdConfigProvider";
 
 export type View = {
     key: string;
@@ -28,7 +29,29 @@ export interface TableWithViewsProps<T> {
     enableInfiniteScroll?: boolean;
     defaultPageSize?: number;
     className?: string;
+    headerClassName?: string;
+    titleClassName?: string;
+    descriptionClassName?: string;
+    cardClassName?: string;
+    tabsClassName?: string;
+    tableClassName?: string;
     allowCustomViews?: boolean;
+    /** 
+     * Whether to automatically wrap with Antd ConfigProvider for theming.
+     * Set to false if you handle theming at a higher level.
+     */
+    enableTheming?: boolean;
+    /** 
+     * Primary color for the theme. Only used if enableTheming is true.
+     */
+    primaryColor?: {
+        light?: string;
+        dark?: string;
+    } | string;
+    /**
+     * Force a specific theme mode. Only used if enableTheming is true.
+     */
+    forceTheme?: 'light' | 'dark';
 }
 
 export function TableWithViews<T extends Record<string, any>>({
@@ -44,7 +67,16 @@ export function TableWithViews<T extends Record<string, any>>({
     actions,
     defaultPageSize = 20,
     className,
+    headerClassName,
+    titleClassName,
+    descriptionClassName,
+    cardClassName,
+    tabsClassName,
+    tableClassName,
     allowCustomViews = true,
+    enableTheming = true,
+    primaryColor,
+    forceTheme,
 }: TableWithViewsProps<T>) {
     const { t } = useTranslation();
     const isMobile = useIsMobile();
@@ -118,6 +150,7 @@ export function TableWithViews<T extends Record<string, any>>({
                         request={request}
                         enableInfiniteScroll={enableInfiniteScroll}
                         defaultPageSize={defaultPageSize}
+                        tableClassName={tableClassName}
                     />
                 ),
             }];
@@ -137,29 +170,37 @@ export function TableWithViews<T extends Record<string, any>>({
                     request={createViewRequest(view)}
                     enableInfiniteScroll={enableInfiniteScroll}
                     defaultPageSize={defaultPageSize}
+                    tableClassName={tableClassName}
                 />
             ),
         }));
     }, [viewsState, dataName, columns, rowKey, request, enableInfiniteScroll, defaultPageSize, t, id, isMobile]);
 
     if (tabs.length === 0) {
-        return <Empty description={t("no_data", "No data available")} />;
+        const emptyContent = <Empty description={t("no_data", "No data available")} />;
+        return enableTheming ? (
+            <AntdConfigProvider primaryColor={primaryColor} forceTheme={forceTheme}>
+                {emptyContent}
+            </AntdConfigProvider>
+        ) : emptyContent;
     }
 
-    return (
+    const content = (
         <div className={cn("max-w-screen-2xl mx-auto space-y-4", className)}>
             {/* Header */}
-            <div className={cn(isMobile ? "p-2" : "")}>
+            <div className={cn(isMobile ? "p-2" : "", headerClassName)}>
                 <h1 className={cn(
-                    "text-2xl font-bold text-gray-900 dark:text-white",
-                    isMobile && "text-center"
+                    "text-2xl font-bold",
+                    isMobile && "text-center",
+                    titleClassName
                 )}>
                     {t(title, title)}
                 </h1>
                 {description && (
                     <p className={cn(
-                        "text-gray-600 dark:text-gray-300 mt-1",
-                        isMobile && "text-center"
+                        "mt-1",
+                        isMobile && "text-center",
+                        descriptionClassName
                     )}>
                         {t(description, description)}
                     </p>
@@ -169,8 +210,8 @@ export function TableWithViews<T extends Record<string, any>>({
             {/* Table with Tabs */}
             <Card
                 className={cn(
-                    "bg-white dark:border-stroke-dark dark:bg-gray-dark",
-                    isMobile ? "border-none rounded-none" : "rounded-lg"
+                    isMobile ? "border-none rounded-none" : "rounded-lg",
+                    cardClassName
                 )}
                 styles={{
                     body: { padding: isMobile ? "0px" : "24px" }
@@ -184,6 +225,7 @@ export function TableWithViews<T extends Record<string, any>>({
                     activeKey={activeKey}
                     onChange={setActiveKey}
                     hideAdd={!allowCustomViews}
+                    className={tabsClassName}
                     tabBarExtraContent={
                         actions && actions.length > 0 ? (
                             <div className="mx-1">
@@ -223,4 +265,10 @@ export function TableWithViews<T extends Record<string, any>>({
             )}
         </div>
     );
+
+    return enableTheming ? (
+        <AntdConfigProvider primaryColor={primaryColor} forceTheme={forceTheme}>
+            {content}
+        </AntdConfigProvider>
+    ) : content;
 }

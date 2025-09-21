@@ -24,7 +24,7 @@ const menuItemColumns: ProColumns<MenuItem>[] = [
                 <div>
                     <div className="font-medium">{record.name}</div>
                     <div className="text-sm opacity-60 line-clamp-2">{record.description}</div>
-                    <div className="text-xs text-blue-600 dark:text-blue-400">{record.restaurantName}</div>
+                    <div className="text-xs opacity-80">{record.restaurantName}</div>
                 </div>
             </div>
         ),
@@ -35,7 +35,7 @@ const menuItemColumns: ProColumns<MenuItem>[] = [
         key: 'price',
         width: 100,
         render: (_, record) => (
-            <span className="font-bold text-green-600">${record.price}</span>
+            <span className="font-bold">${record.price}</span>
         ),
         sorter: true,
     },
@@ -93,7 +93,7 @@ const menuItemColumns: ProColumns<MenuItem>[] = [
             record.popular ? (
                 <Badge color="gold" text="Popular" />
             ) : (
-                <span className="text-gray-400">Regular</span>
+                <span className="opacity-60">Regular</span>
             )
         ),
     },
@@ -106,7 +106,7 @@ const menuItemColumns: ProColumns<MenuItem>[] = [
             record.calories ? (
                 <span className="text-sm">{record.calories} cal</span>
             ) : (
-                <span className="text-gray-400">N/A</span>
+                <span className="opacity-60">N/A</span>
             )
         ),
     },
@@ -215,6 +215,7 @@ export default function MenuItemsTable() {
             rowKey="id"
             defaultPageSize={6}
             enableInfiniteScroll={false}
+            enableTheming={false}
         />
     );
 }

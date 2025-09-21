@@ -9,12 +9,22 @@ export type { TableRequest, TableFilters } from "./components/SimpleTable";
 export { TableActions, TableAction } from "./components/TableActions";
 export type { TableActionConfig } from "./components/TableActions";
 
+// Theming components
+export { AntdConfigProvider } from "./components/AntdConfigProvider";
+export { withTheme, useConditionalTheme } from "./components/withTheme";
+
 // Hooks
 export { useIsMobile } from "./hooks/useIsMobile";
 export { useTranslation, I18nProvider } from "./hooks/useTranslation";
 
 // Utils
 export { cn } from "./utils/cn";
+export {
+    detectTheme,
+    createThemeDetector,
+    useThemeDetection,
+    getDefaultThemeColors
+} from "./utils/theme";
 
 // Re-export commonly used types from antd pro-components
 export type { ProColumns } from "@ant-design/pro-components";

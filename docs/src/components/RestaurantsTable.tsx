@@ -183,6 +183,7 @@ export default function RestaurantsTable() {
             actions={restaurantActions}
             rowKey="id"
             defaultPageSize={8}
+            enableTheming={false}
         />
     );
 }

@@ -1,4 +1,4 @@
-/**
+/* *
  * Any CSS included here will be global. The classic template
  * bundles Infima by default. Infima is a CSS framework designed to
  * work well for content-centric websites.
@@ -27,22 +27,4 @@
   --ifm-color-primary-lighter: #32d8b4;
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
-}
-
-/* Ensure Ant Design tables work well with dark theme */
-[data-theme='dark'] .ant-pro-table-search {
-  background: var(--ifm-background-color) !important;
-}
-
-[data-theme='dark'] .ant-pro-table-list-toolbar {
-  background: var(--ifm-background-color) !important;
-}
-
-/* Make sure table text is visible in both themes */
-.ant-table-tbody > tr > td {
-  color: var(--ifm-font-color-base) !important;
-}
-
-[data-theme='dark'] .ant-table-tbody > tr > td {
-  color: var(--ifm-font-color-base) !important;
 }

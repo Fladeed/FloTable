@@ -18,6 +18,7 @@ interface SimpleTableProps<T> {
     enableInfiniteScroll?: boolean;
     defaultPageSize?: number;
     className?: string;
+    tableClassName?: string;
 }
 
 export function SimpleTable<T extends Record<string, any>>({
@@ -29,6 +30,7 @@ export function SimpleTable<T extends Record<string, any>>({
     enableInfiniteScroll = false,
     defaultPageSize = 20,
     className,
+    tableClassName,
 }: SimpleTableProps<T>) {
     const isMobile = useIsMobile();
     const tableRef = useRef<any>(null);
@@ -64,6 +66,7 @@ export function SimpleTable<T extends Record<string, any>>({
                 columns={columns}
                 request={enhancedRequest}
                 search={false}
+                className={tableClassName}
                 options={{
                     search: true,
                     reload: true,

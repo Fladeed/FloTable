@@ -104,12 +104,12 @@ export default function AppLayout({ children }: AppLayoutProps) {
             >
                 <div className="p-4 border-b border-gray-200">
                     <div className="flex items-center space-x-2">
-                        <TableOutlined className="text-xl text-blue-600" />
+                        <TableOutlined className="text-xl" />
                         <div>
-                            <Title level={4} className="!mb-0 !text-gray-900">
+                            <Title level={4} className="!mb-0">
                                 FloTable
                             </Title>
-                            <div className="text-xs text-gray-500">with Views Demo</div>
+                            <div className="text-xs opacity-60">with Views Demo</div>
                         </div>
                     </div>
                 </div>
@@ -134,7 +134,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
                         <Title level={3} className="!mb-0">
                             Restaurant Management System
                         </Title>
-                        <div className="text-sm text-gray-500">
+                        <div className="text-sm opacity-60">
                             Powered by FloTable with Views
                         </div>
                     </div>

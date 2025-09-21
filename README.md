@@ -95,6 +95,113 @@ export default function UserTable() {
 }
 ```
 
+## 🎨 Customization
+
+The components use Ant Design defaults and provide className props for styling customization:
+
+```tsx
+<TableWithViews<User>
+  id="user-table"
+  title="User Management"
+  columns={columns}
+  request={handleRequest}
+  views={views}
+  rowKey="id"
+  // Component-level customization
+  className="my-custom-wrapper"
+  headerClassName="custom-header"
+  titleClassName="text-3xl font-bold text-blue-600"
+  descriptionClassName="text-gray-600 italic"
+  cardClassName="shadow-lg border-2"
+  tabsClassName="custom-tabs"
+  tableClassName="custom-table"
+/>
+```
+
+### Available className Props
+
+- `className`: Main wrapper div
+- `headerClassName`: Header section container
+- `titleClassName`: Table title
+- `descriptionClassName`: Table description
+- `cardClassName`: Ant Design Card component
+- `tabsClassName`: Ant Design Tabs component  
+- `tableClassName`: ProTable component
+
+### Using with CSS Modules
+
+```tsx
+import styles from './MyTable.module.css';
+
+<TableWithViews
+  titleClassName={styles.customTitle}
+  cardClassName={styles.customCard}
+  // ... other props
+/>
+```
+
+### Using with Tailwind CSS
+
+```tsx
+<TableWithViews
+  titleClassName="text-2xl font-bold text-gray-900 dark:text-white"
+  cardClassName="bg-white dark:bg-gray-800 rounded-lg shadow-md"
+  headerClassName="mb-4 p-4"
+  // ... other props
+/>
+```
+
+## 🎨 Dark Mode & Theme Support
+
+For proper dark mode support, wrap your app with the provided ConfigProvider:
+
+```tsx
+import { FloTableConfigProvider, TableWithViews } from 'flo-table-with-views';
+
+function App() {
+  const [isDark, setIsDark] = useState(false);
+
+  return (
+    <FloTableConfigProvider 
+      isDark={isDark}
+      primaryColor="#1890ff"
+    >
+      <TableWithViews
+        // ... your props
+      />
+    </FloTableConfigProvider>
+  );
+}
+```
+
+### Manual Theme Configuration
+
+You can also use Ant Design's ConfigProvider directly:
+
+```tsx
+import { ConfigProvider, theme } from 'antd';
+import { TableWithViews } from 'flo-table-with-views';
+
+function App() {
+  const [isDark, setIsDark] = useState(false);
+
+  return (
+    <ConfigProvider
+      theme={{
+        algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
+        token: {
+          colorPrimary: '#1890ff',
+        },
+      }}
+    >
+      <TableWithViews
+        // ... your props
+      />
+    </ConfigProvider>
+  );
+}
+```
+
 ## 📖 Documentation & Live Preview
 
 - **Documentation & Live Preview**: [http://localhost:3001](http://localhost:3001)
