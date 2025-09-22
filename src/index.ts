@@ -1,15 +1,23 @@
 // Main component
-export { TableWithViews } from "./components/TableWithViews";
-export type { TableWithViewsProps, View } from "./components/TableWithViews";
+export { FloTableWithViews } from "./components/FloTable";
+export type { FloTableWithViewsProps, View } from "./components/FloTable";
 
 // Sub-components
-export { SimpleTable } from "./components/SimpleTable";
-export type { TableRequest, TableFilters } from "./components/SimpleTable";
+export { default as FloTable } from "./components/FloSimpleTable";
+export type { FloRequest, FloFilters } from "./components/FloSimpleTable";
 
-export { TableActions, TableAction } from "./components/TableActions";
-export type { TableActionConfig } from "./components/TableActions";
+export { FloTableActions, FloTableAction } from "./components/FloTableActions";
+export type { FloTableActionConfig } from "./components/FloTableActions";
 
-// Theming components
+// Filter components
+export { FloTableFilters, FloTableFiltersDrawer } from "./components/FloTableFilters";
+export type { FloFilterKey } from "./components/FloTableFilters";
+export { QuickFilter } from "./components/QuickFilter";
+export { FilterInput } from "./components/FilterInput";
+export { Button } from "./components/Button";
+export { SearchIcon, FilterIcon, ClearIcon } from "./components/Icons";
+
+// Theming components (optional - for advanced theming needs)
 export { AntdConfigProvider } from "./components/AntdConfigProvider";
 export { withTheme, useConditionalTheme } from "./components/withTheme";
 

@@ -1,4 +1,4 @@
-# FloTable with Views
+    # FloTable with Views
 
 A powerful, responsive table component library for React applications with built-in views system, filtering, and mobile optimization.
 
@@ -95,47 +95,77 @@ export default function UserTable() {
 }
 ```
 
-## 🎨 Customization
+## 🎨 Styling & Customization
 
-The components use Ant Design defaults and provide className props for styling customization:
+The components use **Ant Design's default theme** and provide extensive `className` and `style` props for customization. No built-in theming is applied, giving you full control over styling.
+
+### Available Styling Props
 
 ```tsx
-<TableWithViews<User>
+<FloTableWithViews<User>
   id="user-table"
   title="User Management"
   columns={columns}
   request={handleRequest}
   views={views}
   rowKey="id"
-  // Component-level customization
+  
+  // Component-level styling
   className="my-custom-wrapper"
-  headerClassName="custom-header"
+  style={{ backgroundColor: 'white' }}
+  
+  // Header section styling
+  headerClassName="custom-header bg-gray-50 p-4"
   titleClassName="text-3xl font-bold text-blue-600"
   descriptionClassName="text-gray-600 italic"
-  cardClassName="shadow-lg border-2"
+  
+  // Card and table styling
+  cardClassName="shadow-lg border-2 border-gray-200"
   tabsClassName="custom-tabs"
-  tableClassName="custom-table"
+  
+  // Sub-components styling
+  tableClassName="custom-table-styles"
 />
 ```
 
-### Available className Props
+### All Available className Props
 
-- `className`: Main wrapper div
-- `headerClassName`: Header section container
-- `titleClassName`: Table title
-- `descriptionClassName`: Table description
-- `cardClassName`: Ant Design Card component
-- `tabsClassName`: Ant Design Tabs component  
-- `tableClassName`: ProTable component
+| Prop | Description | Component |
+|------|-------------|-----------|
+| `className` | Main wrapper container | Root div |
+| `headerClassName` | Header section container | Header div |
+| `titleClassName` | Table title styling | H1 element |
+| `descriptionClassName` | Table description styling | P element |
+| `cardClassName` | Ant Design Card component | Card |
+| `tabsClassName` | Ant Design Tabs component | Tabs |
+| `tableClassName` | ProTable component styling | ProTable |
+
+### Filter Component Styling
+
+```tsx
+// Filter components also support custom styling
+<FloTableFilters
+  // ... other props
+  className="custom-filter-container"
+  buttonClassName="custom-filter-button bg-blue-500 text-white"
+/>
+
+<QuickFilter
+  // ... other props
+  className="custom-quick-filter border-blue-300"
+  buttonClassName="custom-button hover:bg-blue-50"
+/>
+```
 
 ### Using with CSS Modules
 
 ```tsx
 import styles from './MyTable.module.css';
 
-<TableWithViews
+<FloTableWithViews
   titleClassName={styles.customTitle}
   cardClassName={styles.customCard}
+  tableClassName={styles.customTable}
   // ... other props
 />
 ```
@@ -143,44 +173,25 @@ import styles from './MyTable.module.css';
 ### Using with Tailwind CSS
 
 ```tsx
-<TableWithViews
-  titleClassName="text-2xl font-bold text-gray-900 dark:text-white"
-  cardClassName="bg-white dark:bg-gray-800 rounded-lg shadow-md"
-  headerClassName="mb-4 p-4"
+<FloTableWithViews
+  className="max-w-6xl mx-auto"
+  headerClassName="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-6 rounded-t-lg"
+  titleClassName="text-2xl font-bold"
+  descriptionClassName="text-blue-100 mt-2"
+  cardClassName="shadow-2xl border-0 rounded-lg"
+  tabsClassName="[&_.ant-tabs-tab]:text-blue-600"
+  tableClassName="[&_.ant-table-thead]:bg-gray-50"
   // ... other props
 />
 ```
 
-## 🎨 Dark Mode & Theme Support
+### Dark Mode Support
 
-For proper dark mode support, wrap your app with the provided ConfigProvider:
-
-```tsx
-import { FloTableConfigProvider, TableWithViews } from 'flo-table-with-views';
-
-function App() {
-  const [isDark, setIsDark] = useState(false);
-
-  return (
-    <FloTableConfigProvider 
-      isDark={isDark}
-      primaryColor="#1890ff"
-    >
-      <TableWithViews
-        // ... your props
-      />
-    </FloTableConfigProvider>
-  );
-}
-```
-
-### Manual Theme Configuration
-
-You can also use Ant Design's ConfigProvider directly:
+For dark mode support, wrap your app with Ant Design's ConfigProvider:
 
 ```tsx
 import { ConfigProvider, theme } from 'antd';
-import { TableWithViews } from 'flo-table-with-views';
+import { FloTableWithViews } from 'flo-table-with-views';
 
 function App() {
   const [isDark, setIsDark] = useState(false);
@@ -190,16 +201,85 @@ function App() {
       theme={{
         algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
         token: {
-          colorPrimary: '#1890ff',
+          colorPrimary: '#1890ff', // Your brand color
         },
       }}
     >
-      <TableWithViews
-        // ... your props
+      <FloTableWithViews
+        className={isDark ? 'dark-theme-table' : 'light-theme-table'}
+        // ... other props
       />
     </ConfigProvider>
   );
 }
+```
+
+### Advanced Theming (Optional)
+
+For advanced theming needs, you can still use the provided theming utilities:
+
+```tsx
+import { AntdConfigProvider, detectTheme } from 'flo-table-with-views';
+
+function App() {
+  return (
+    <AntdConfigProvider 
+      primaryColor="#1890ff"
+      themeDetector={detectTheme}
+    >
+      <FloTableWithViews
+        // ... your props
+      />
+    </AntdConfigProvider>
+  );
+}
+```
+
+## 🔍 Filtering Features
+
+### Search Functionality
+The component includes a built-in search input that filters across all searchable columns:
+
+```tsx
+<TableWithViews
+  // ... other props
+  initQuickFilterColumns={['name', 'email']} // Columns to include in quick search
+/>
+```
+
+### Filter Drawer
+Click the "All Filters" button to open a drawer with detailed filtering options for each column:
+
+- **Text Columns**: Free text search
+- **Select Columns**: Dropdown with predefined options  
+- **Date Columns**: Date picker for date ranges
+- **Number Columns**: Numeric input with validation
+
+### Custom Filter Configuration
+Define which columns should be available for quick filtering:
+
+```tsx
+const columns: ProColumns<User>[] = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    valueType: 'text', // Enables text filter
+  },
+  {
+    title: 'Status',
+    dataIndex: 'status',
+    valueType: 'select',
+    valueEnum: {
+      active: 'Active',
+      inactive: 'Inactive',
+    },
+  },
+  {
+    title: 'Created Date',
+    dataIndex: 'createdAt',
+    valueType: 'date', // Enables date filter
+  },
+];
 ```
 
 ## 📖 Documentation & Live Preview
