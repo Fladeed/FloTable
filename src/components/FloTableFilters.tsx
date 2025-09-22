@@ -4,7 +4,7 @@ import { Button } from "./Button";
 import { QuickFilter } from "./QuickFilter";
 import { useIsMobile } from "../hooks/useIsMobile";
 import { ProColumns } from "@ant-design/pro-components";
-import { Drawer, Form, Space } from "antd";
+import { Drawer, Form, Space, Button as AntButton } from "antd";
 import { Key } from "react";
 import { IoFilter } from "react-icons/io5";
 import { MdOutlineClearAll } from "react-icons/md";
@@ -52,6 +52,7 @@ export const FloTableFilters = <T,>({ columns, quickFilterColumns, setFilterVisi
                         handleQuickFilterChange(col, value);
                     }}
                     value={filters ? filters[col.dataIndex as FloFilterKey<T>] : ""}
+                    style={{ height: '2.25rem' }}
                 />
             );
         });
@@ -64,26 +65,36 @@ export const FloTableFilters = <T,>({ columns, quickFilterColumns, setFilterVisi
                 col={searchColumn}
                 onFiltersChange={(value) => handleQuickFilterChange(searchColumn, value)}
                 value={filters ? filters["search"] : ""}
+                style={{ height: '2.25rem' }}
+                placeholder="Search..."
             />
             {!isMobile && quickFilterFields}
             <button
                 key="filterDrawerBtn"
                 type="button"
                 className={cn(buttonClassName)}
-                style={{ 
+                style={{
                     fontSize: '0.875rem',
                     padding: '0.5rem 1rem',
                     transition: 'all 150ms ease',
                     whiteSpace: 'nowrap',
                     borderRadius: '0.375rem',
-                    border: '1px solid #d1d5db'
+                    border: '1px solid #d1d5db',
+                    height: '2.25rem',
+                    display: 'flex',
+                    alignItems: 'center'
                 }}
                 onClick={() => setFilterVisible(true)}
             >
                 <IoFilter style={{ display: 'inline-block' }} />
                 {isMobile ? "" : <span style={{ marginLeft: '0.5rem' }}>All Filters</span>}
             </button>
-            <Button disabled={Object.values(filters).filter(val => val !== undefined && val !== "").length === 0} onClick={handleClearFilters} variant="outlined">
+            <Button
+                disabled={Object.values(filters).filter(val => val !== undefined && val !== "").length === 0}
+                onClick={handleClearFilters}
+                variant="outlined"
+                style={{ height: '2.25rem' }}
+            >
                 <MdOutlineClearAll size={22} />
             </Button>
         </div>
@@ -132,23 +143,21 @@ export const FloTableFiltersDrawer = <T,>({ columns, filterVisible, setFilterVis
                 </Form.Item>
             ))}
             <Space>
-                <button
-                    type="submit"
-                    className={cn("px-4 py-2 rounded transition", buttonClassName)}
+                <AntButton
+                    type="primary"
+                    htmlType="submit"
                     onClick={() => setFilterVisible(false)}
                 >
                     Apply
-                </button>
-                <button
-                    type="button"
-                    className={cn("px-4 py-2 rounded transition", buttonClassName)}
+                </AntButton>
+                <AntButton
                     onClick={() => {
                         onClear?.();
                         setFilterVisible(false);
                     }}
                 >
                     Clear
-                </button>
+                </AntButton>
             </Space>
         </Form>
     );

@@ -9,6 +9,7 @@ type FloButtonProps = {
   variant?: "outlined" | "borderless";
   className?: string;
   dotClassName?: string;
+  style?: React.CSSProperties;
 };
 
 export const Button: React.FC<FloButtonProps> = ({
@@ -19,6 +20,7 @@ export const Button: React.FC<FloButtonProps> = ({
   variant = "borderless",
   className,
   dotClassName,
+  style,
 }) => {
   return (
     <button
@@ -31,20 +33,21 @@ export const Button: React.FC<FloButtonProps> = ({
         padding: '0.5rem 0.75rem',
         transition: 'all 150ms ease',
         whiteSpace: 'nowrap',
-        ...(variant === "outlined" && { 
-          border: '1px solid #d1d5db', 
-          borderRadius: '0.375rem' 
+        ...(variant === "outlined" && {
+          border: '1px solid #d1d5db',
+          borderRadius: '0.375rem'
         }),
-        ...(disabled && { 
-          cursor: 'not-allowed', 
-          opacity: 0.5 
-        })
+        ...(disabled && {
+          cursor: 'not-allowed',
+          opacity: 0.5
+        }),
+        ...style
       }}
     >
       {children}
       {showDot && !disabled && (
-        <span 
-          className={cn(dotClassName)} 
+        <span
+          className={cn(dotClassName)}
           style={{
             position: 'absolute',
             top: '0.25rem',
@@ -54,7 +57,7 @@ export const Button: React.FC<FloButtonProps> = ({
             width: '0.5rem',
             borderRadius: '9999px',
             backgroundColor: '#3b82f6'
-          }} 
+          }}
         />
       )}
     </button>

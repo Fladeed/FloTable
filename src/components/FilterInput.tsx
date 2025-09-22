@@ -1,6 +1,5 @@
 import { ProColumns } from "@ant-design/pro-components";
 import { Input, Select, DatePicker, InputNumber } from "antd";
-import { cn } from "../utils/cn";
 
 interface FilterInputProps<T> {
     col: ProColumns<T>;
@@ -8,19 +7,59 @@ interface FilterInputProps<T> {
     onChange: (value: any) => void;
     onBlur?: () => void;
     quickFilter?: boolean;
+    placeholder?: string;
 }
 
-export const FilterInput = <T,>({ 
-    col, 
-    value, 
-    onChange, 
-    onBlur, 
-    quickFilter = false 
+export const FilterInput = <T,>({
+    col,
+    value,
+    onChange,
+    onBlur,
+    quickFilter = false,
+    placeholder
 }: FilterInputProps<T>) => {
-    const baseClassName = cn(
-        "border-0 focus:ring-0 focus:border-0",
-        quickFilter && "h-8 text-sm"
-    );
+    const getBaseStyle = () => ({
+        width: '100%',
+        ...(quickFilter && {
+            height: '100%',
+            border: 'none',
+            boxShadow: 'none'
+        })
+    });
+
+    const getSelectStyle = () => ({
+        width: '100%',
+        ...(quickFilter && {
+            height: '100%',
+            border: 'none',
+            boxShadow: 'none'
+        })
+    });
+
+    const getInputNumberStyle = () => ({
+        width: '100%',
+        ...(quickFilter && {
+            height: '100%',
+            border: 'none',
+            boxShadow: 'none',
+            display: 'flex',
+            alignItems: 'center'
+        })
+    });
+
+
+    const getInputClassName = () => quickFilter ? 'border-0 shadow-none' : '';
+
+    const getSelectClassName = () => {
+        if (quickFilter) {
+            return 'quick-filter-select';
+        }
+        return '';
+    };
+
+    const getPlaceholder = () => {
+        return placeholder || `Filter by ${col.title}`;
+    };
 
     // Determine input type based on column configuration
     const getInputType = () => {
@@ -61,7 +100,7 @@ export const FilterInput = <T,>({
 
     switch (inputType) {
         case 'select':
-            const options = col.valueEnum 
+            const options = col.valueEnum
                 ? Object.entries(col.valueEnum).map(([key, option]) => ({
                     value: key,
                     label: typeof option === 'string' ? option : option?.text || key
@@ -75,13 +114,14 @@ export const FilterInput = <T,>({
                     value={value}
                     onChange={onChange}
                     onBlur={onBlur}
-                    placeholder={`Filter by ${col.title}`}
+                    placeholder={getPlaceholder()}
                     allowClear
                     showSearch
-                    className={baseClassName}
-                    style={{ width: '100%' }}
+                    className={getSelectClassName()}
+                    style={getSelectStyle()}
                     size={quickFilter ? 'small' : 'middle'}
                     options={options}
+                    bordered={!quickFilter}
                 />
             );
 
@@ -91,10 +131,11 @@ export const FilterInput = <T,>({
                     value={value}
                     onChange={onChange}
                     onBlur={onBlur}
-                    placeholder={`Filter by ${col.title}`}
-                    className={baseClassName}
-                    style={{ width: '100%' }}
+                    placeholder={getPlaceholder()}
+                    className={getInputClassName()}
+                    style={getBaseStyle()}
                     size={quickFilter ? 'small' : 'middle'}
+                    bordered={!quickFilter}
                 />
             );
 
@@ -104,10 +145,12 @@ export const FilterInput = <T,>({
                     value={value}
                     onChange={onChange}
                     onBlur={onBlur}
-                    placeholder={`Filter by ${col.title}`}
-                    className={baseClassName}
-                    style={{ width: '100%' }}
+                    placeholder={getPlaceholder()}
+                    className={getInputClassName()}
+                    style={getInputNumberStyle()}
                     size={quickFilter ? 'small' : 'middle'}
+                    controls={false}
+                    bordered={!quickFilter}
                 />
             );
 
@@ -117,9 +160,9 @@ export const FilterInput = <T,>({
                     value={value}
                     onChange={(e) => onChange(e.target.value)}
                     onBlur={onBlur}
-                    placeholder={`Filter by ${col.title}`}
-                    className={baseClassName}
-                    style={{ width: '100%' }}
+                    placeholder={getPlaceholder()}
+                    className={getInputClassName()}
+                    style={getBaseStyle()}
                     rows={quickFilter ? 1 : 3}
                 />
             );
@@ -130,10 +173,11 @@ export const FilterInput = <T,>({
                     value={value}
                     onChange={(e) => onChange(e.target.value)}
                     onBlur={onBlur}
-                    placeholder={`Filter by ${col.title}`}
-                    className={baseClassName}
-                    style={{ width: '100%' }}
+                    placeholder={getPlaceholder()}
+                    className={getInputClassName()}
+                    style={getBaseStyle()}
                     size={quickFilter ? 'small' : 'middle'}
+                    bordered={!quickFilter}
                 />
             );
     }
