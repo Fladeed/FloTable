@@ -1,4 +1,4 @@
-    # FloTable
+# FloTable
 
 <div align="center">
 
