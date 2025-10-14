@@ -28,7 +28,7 @@
 - **Performance Optimized** - Virtual scrolling and efficient rendering
 - **Theme Support** - Complete styling control and dark mode ready
 
-## � Quick Start
+## Quick Start
 
 ### Installation
 
