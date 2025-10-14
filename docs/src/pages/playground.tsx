@@ -27,12 +27,19 @@ const columns = [
     title: 'ID',
     dataIndex: 'id',
     key: 'id',
-    width: 80,
+    sorter: true,
   },
   {
     title: 'Name',
     dataIndex: 'name',
     key: 'name',
+    sorter: true,
+    render: (text, record) => (
+      <div>
+        <div className="font-semibold">{text}</div>
+        <div className="text-sm text-gray-500">{record.email}</div>
+      </div>
+    ),
   },
   {
     title: 'Email',

@@ -1,5 +1,6 @@
 import { ProTable, ProColumns } from "@ant-design/pro-components";
 import { Tooltip } from "antd";
+import enUS from "antd/locale/en_US";
 import { Key, useState } from "react";
 import { ProfileOutlined, TableOutlined } from "@ant-design/icons";
 import { FloFilters, FloTableFilters } from "./FloTableFilters";
@@ -54,6 +55,9 @@ export function PaginatedTable<T extends Record<string, any>>({
         key={`${dataName}-${isMobile}-${mobileTableType}`}
         ghost={true}
         style={{ width: '100%' }}
+        locale={{
+          ...enUS.Table,
+        }}
         toolBarRender={() => {
           return [
             <FloTableFilters
@@ -83,6 +87,19 @@ export function PaginatedTable<T extends Record<string, any>>({
           showTotal: (total, range) =>
             `${range[0]}-${range[1]} of ${total} items`,
           pageSizeOptions: ['10', '20', '50', '100'],
+          locale: {
+            items_per_page: '/ page',
+            jump_to: 'Go to',
+            jump_to_confirm: 'confirm',
+            page: 'Page',
+            prev_page: 'Previous Page',
+            next_page: 'Next Page',
+            prev_5: 'Previous 5 Pages',
+            next_5: 'Next 5 Pages',
+            prev_3: 'Previous 3 Pages',
+            next_3: 'Next 3 Pages',
+            page_size: 'Page Size'
+          }
         }}
         scroll={{
           x: true,

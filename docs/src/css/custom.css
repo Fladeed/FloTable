@@ -6,25 +6,102 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+  --ifm-color-primary: #81C177;
+  --ifm-color-primary-dark: #73b666;
+  --ifm-color-primary-darker: #6dab5e;
+  --ifm-color-primary-darkest: #5a8e4d;
+  --ifm-color-primary-light: #8fcc88;
+  --ifm-color-primary-lighter: #95d790;
+  --ifm-color-primary-lightest: #a7e2a0;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
+  --ifm-color-primary: #8fcc88;
+  --ifm-color-primary-dark: #7bc472;
+  --ifm-color-primary-darker: #73b666;
+  --ifm-color-primary-darkest: #5d9952;
+  --ifm-color-primary-light: #a3d39e;
+  --ifm-color-primary-lighter: #a9d7a5;
+  --ifm-color-primary-lightest: #bce3b8;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+/* FloTable full width styling - only affects the table itself */
+.full-width-table .ant-pro-table,
+.full-width-table .ant-table-wrapper,
+.full-width-table .ant-table {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.full-width-table .ant-table-container {
+  overflow-x: auto;
+}
+
+/* Responsive table improvements */
+@media (max-width: 768px) {
+  .full-width-table .ant-table-tbody > tr > td {
+    padding: 8px 4px !important;
+  }
+  
+  .full-width-table .ant-table-thead > tr > th {
+    padding: 8px 4px !important;
+  }
+}
+
+/* Improve fixed column styling */
+.full-width-table .ant-table-fixed-left,
+.full-width-table .ant-table-fixed-right {
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Enhance Ant Design components in tables */
+.full-width-table .ant-progress {
+  margin-bottom: 0 !important;
+}
+
+.full-width-table .ant-tag {
+  margin-right: 4px;
+  margin-bottom: 2px;
+}
+
+.full-width-table .ant-statistic {
+  margin-bottom: 0 !important;
+}
+
+/* Homepage enhancements */
+.hero {
+  background: linear-gradient(135deg, var(--ifm-background-color) 0%, var(--ifm-color-emphasis-100) 100%);
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.hero .button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2) !important;
+}
+
+/* Fix outline button hover in homepage */
+.hero .button--secondary:hover {
+  background-color: var(--ifm-color-primary) !important;
+  color: white !important;
+  border-color: var(--ifm-color-primary) !important;
+}
+
+.hero .button--primary:hover {
+  background-color: var(--ifm-color-primary-dark) !important;
+  border-color: var(--ifm-color-primary-dark) !important;
+}
+
+/* Feature cards hover effect */
+.features .col:hover > div {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
 }

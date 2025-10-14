@@ -1,5 +1,6 @@
 import { ProTable, ProColumns, ActionType } from "@ant-design/pro-components";
 import { Tooltip, Spin } from "antd";
+import enUS from "antd/locale/en_US";
 import { Key, useState, useEffect, useRef, Ref } from "react";
 import { ProfileOutlined, TableOutlined } from "@ant-design/icons";
 import { FloFilters, FloTableFilters } from "./FloTableFilters";
@@ -82,6 +83,9 @@ export function InfiniteScrollTable<T extends Record<string, any>>({
                         ghost={true}
                         toolbar={{}}
                         style={{ width: '100%' }}
+                        locale={{
+                            ...enUS.Table,
+                        }}
                         toolBarRender={() => {
                             return [
                                 <FloTableFilters

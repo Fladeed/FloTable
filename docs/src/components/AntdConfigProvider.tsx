@@ -1,5 +1,6 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import { ConfigProvider, theme } from 'antd';
+import enUS from 'antd/locale/en_US';
 
 interface AntdConfigProviderProps {
     children: ReactNode;
@@ -34,11 +35,12 @@ export function AntdConfigProvider({ children }: AntdConfigProviderProps) {
 
     return (
         <ConfigProvider
+            locale={enUS}
             theme={{
                 algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
                 token: {
-                    // Customize primary color to match Docusaurus theme
-                    colorPrimary: isDark ? '#25c2a0' : '#2e8555',
+                    // Customize primary color to match our green theme
+                    colorPrimary: '#81C177',
                 },
             }}
         >
