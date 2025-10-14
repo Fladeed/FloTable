@@ -12,6 +12,7 @@
     ],
     "scripts": {
         "build": "rollup -c",
+        "build:docs": "yarn build && cd docs && yarn install && yarn build",
         "build:watch": "rollup -c -w",
         "dev": "rollup -c -w",
         "typecheck": "tsc --noEmit",
