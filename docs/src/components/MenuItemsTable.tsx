@@ -3,7 +3,7 @@
 import { ProColumns } from '@ant-design/pro-components';
 import { Tag, Avatar, Switch, Badge } from 'antd';
 import { MenuItem } from '../types';
-import { TableWithViews, View, TableActionConfig } from '../../../src';
+import { FloTableWithViews, View, FloTableActionConfig } from '../../../src';
 import { mockAPI } from '../data/mockData';
 import { PlusOutlined, ExportOutlined } from '@ant-design/icons';
 
@@ -12,8 +12,9 @@ const menuItemColumns: ProColumns<MenuItem>[] = [
         title: 'Item',
         dataIndex: 'name',
         key: 'name',
+        valueType: 'text',
+        width: '40%',
         fixed: 'left',
-        width: 250,
         render: (_, record) => (
             <div className="flex items-center space-x-3">
                 <Avatar
@@ -33,6 +34,7 @@ const menuItemColumns: ProColumns<MenuItem>[] = [
         title: 'Price',
         dataIndex: 'price',
         key: 'price',
+        valueType: 'money',
         width: 100,
         render: (_, record) => (
             <span className="font-bold">${record.price}</span>
@@ -43,7 +45,15 @@ const menuItemColumns: ProColumns<MenuItem>[] = [
         title: 'Category',
         dataIndex: 'category',
         key: 'category',
+        valueType: 'select',
         width: 120,
+        valueEnum: {
+            'Pizza': 'Pizza',
+            'Pasta': 'Pasta',
+            'Burgers': 'Burgers',
+            'Appetizer': 'Appetizer',
+            'Main Course': 'Main Course',
+        },
         render: (_, record) => (
             <Tag color="blue">{record.category}</Tag>
         ),
@@ -71,6 +81,11 @@ const menuItemColumns: ProColumns<MenuItem>[] = [
         title: 'Available',
         dataIndex: 'available',
         key: 'available',
+        valueType: 'select',
+        valueEnum: {
+            true: { text: 'Available', status: 'Success' },
+            false: { text: 'Unavailable', status: 'Error' },
+        },
         width: 100,
         render: (_, record) => (
             <Switch
@@ -165,7 +180,7 @@ const menuItemViews: View[] = [
     },
 ];
 
-const menuItemActions: TableActionConfig[] = [
+const menuItemActions: FloTableActionConfig[] = [
     {
         label: 'Add Menu Item',
         icon: <PlusOutlined />,
@@ -202,7 +217,7 @@ export default function MenuItemsTable() {
     };
 
     return (
-        <TableWithViews<MenuItem>
+        <FloTableWithViews<MenuItem>
             id="menu-items-table"
             title="Menu Management"
             description="Manage menu items across all restaurants"
@@ -210,12 +225,12 @@ export default function MenuItemsTable() {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             columns={menuItemColumns as any}
             request={handleRequest}
+            initQuickFilterColumns={['name', 'category', 'available']}
             views={menuItemViews}
             actions={menuItemActions}
             rowKey="id"
             defaultPageSize={6}
             enableInfiniteScroll={false}
-            enableTheming={false}
         />
     );
 }

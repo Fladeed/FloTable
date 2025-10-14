@@ -39,6 +39,6 @@ export default [
             format: 'esm',
         },
         plugins: [dts()],
-        external: ['react', 'react-dom', 'antd', '@ant-design/pro-components'],
+        external: ['react', 'react-dom', 'antd', '@ant-design/pro-components', /\.css$/],
     },
 ];

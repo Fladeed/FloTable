@@ -3,7 +3,7 @@ import { Key, ReactNode } from "react";
 import { useIsMobile } from "../hooks/useIsMobile";
 import { IoMdMenu } from "react-icons/io";
 
-export interface TableActionConfig {
+export interface FloTableActionConfig {
     label: string;
     description?: string;
     handler: () => void;
@@ -16,11 +16,11 @@ export interface TableActionConfig {
     className?: string;
 }
 
-interface TableActionProps {
-    action: TableActionConfig;
+interface FloTableActionProps {
+    action: FloTableActionConfig;
 }
 
-export const TableAction = ({ action }: TableActionProps) => {
+export const FloTableAction = ({ action }: FloTableActionProps) => {
     const {
         label,
         description,
@@ -56,17 +56,17 @@ export const TableAction = ({ action }: TableActionProps) => {
     return button;
 };
 
-interface TableActionsProps {
+interface FloTableActionsProps {
     id: Key;
-    actions: TableActionConfig[];
+    actions: FloTableActionConfig[];
     maxVisibleActions?: number;
 }
 
-export const TableActions = ({
+export const FloTableActions = ({
     id,
     actions,
     maxVisibleActions = 3
-}: TableActionsProps) => {
+}: FloTableActionsProps) => {
     const isMobile = useIsMobile();
 
     if (!actions || actions.length === 0) {
@@ -103,7 +103,7 @@ export const TableActions = ({
     return (
         <Space size="small" wrap>
             {actions.map((action, index) => (
-                <TableAction
+                <FloTableAction
                     key={`${id}-action-${index}`}
                     action={action}
                 />

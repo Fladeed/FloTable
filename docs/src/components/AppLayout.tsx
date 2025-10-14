@@ -76,7 +76,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
                     icon: <GithubOutlined />,
                     label: (
                         <a
-                            href="https://github.com/Fladeed/flo-table-with-views"
+                            href="https://github.com/Fladeed/FloTable"
                             target="_blank"
                             rel="noopener noreferrer"
                         >
@@ -135,7 +135,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
                             Restaurant Management System
                         </Title>
                         <div className="text-sm opacity-60">
-                            Powered by FloTable with Views
+                            Powered by FloTable
                         </div>
                     </div>
                 </Header>

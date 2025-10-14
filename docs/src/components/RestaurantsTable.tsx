@@ -3,7 +3,7 @@
 import { ProColumns } from '@ant-design/pro-components';
 import { Tag, Avatar, Rate } from 'antd';
 import { Restaurant } from '../types';
-import { TableWithViews, View, TableActionConfig } from '../../../src';
+import { FloTableWithViews, View, FloTableActionConfig } from '../../../src';
 import { mockAPI } from '../data/mockData';
 import { EditOutlined } from '@ant-design/icons';
 
@@ -12,8 +12,9 @@ const restaurantColumns: ProColumns<Restaurant>[] = [
         title: 'Restaurant',
         dataIndex: 'name',
         key: 'name',
+        valueType: 'text',
+        width: '40%',
         fixed: 'left',
-        width: 200,
         render: (_, record) => (
             <div className="flex items-center space-x-3">
                 <Avatar
@@ -32,7 +33,7 @@ const restaurantColumns: ProColumns<Restaurant>[] = [
         title: 'Rating',
         dataIndex: 'rating',
         key: 'rating',
-        width: 120,
+        valueType: 'digit',
         render: (_, record) => (
             <div className="flex items-center space-x-2">
                 <Rate disabled defaultValue={record.rating} allowHalf />
@@ -45,7 +46,12 @@ const restaurantColumns: ProColumns<Restaurant>[] = [
         title: 'Status',
         dataIndex: 'status',
         key: 'status',
-        width: 100,
+        valueType: 'select',
+        valueEnum: {
+            'open': { text: 'Open', status: 'Success' },
+            'closed': { text: 'Closed', status: 'Error' },
+            'busy': { text: 'Busy', status: 'Warning' },
+        },
         render: (_, record) => {
             const statusConfig = {
                 open: { color: 'green', text: 'Open' },
@@ -80,7 +86,6 @@ const restaurantColumns: ProColumns<Restaurant>[] = [
         title: 'Address',
         dataIndex: 'address',
         key: 'address',
-        width: 200,
         ellipsis: true,
     },
     {
@@ -140,7 +145,7 @@ const restaurantViews: View[] = [
     },
 ];
 
-const restaurantActions: TableActionConfig[] = [
+const restaurantActions: FloTableActionConfig[] = [
     {
         label: 'Add Restaurant',
         icon: <EditOutlined />,
@@ -171,7 +176,7 @@ export default function RestaurantsTable() {
     };
 
     return (
-        <TableWithViews<Restaurant>
+        <FloTableWithViews<Restaurant>
             id="restaurants-table"
             title="Restaurant Management"
             description="Manage restaurants, view their status, and track performance"
@@ -179,11 +184,11 @@ export default function RestaurantsTable() {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             columns={restaurantColumns as any}
             request={handleRequest}
+            initQuickFilterColumns={['name', 'status', 'rating']}
             views={restaurantViews}
             actions={restaurantActions}
             rowKey="id"
             defaultPageSize={8}
-            enableTheming={false}
         />
     );
 }

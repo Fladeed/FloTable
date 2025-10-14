@@ -16,8 +16,13 @@ const sidebars: SidebarsConfig = {
   // Main documentation sidebar
   tutorialSidebar: [
     'intro',
+    'features',
     'table-configuration',
     'views-system',
+    'examples',
+    'filtering-examples',
+    'theme-configuration',
+    'api',
   ],
 };
 

@@ -1,27 +1,47 @@
-# FloTable with Views
+    # FloTable
 
-A powerful, responsive table component library for React applications with built-in views system, filtering, and mobile optimization.
+<div align="center">
 
-## 🚀 Features
+**Powerful, responsive table components for React with views system, advanced filtering & mobile optimization**
 
-- **Views System**: Multiple predefined filtered views of your data
-- **Responsive Design**: Automatically optimized for mobile devices  
-- **TypeScript**: Full type safety and IntelliSense support
-- **Customizable Actions**: Add custom buttons to table toolbar
-- **Search & Filter**: Built-in search with column filtering
-- **Pagination**: Configurable pagination with size options
-- **Ant Design Integration**: Built on Ant Design Pro Components
+[![npm version](https://badge.fury.io/js/flo-table-with-views.svg)](https://badge.fury.io/js/flo-table-with-views)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## 📦 Installation
+[Documentation](https://your-flo-table-docs.vercel.app) • [🎮 Live Demo](https://your-flo-table-docs.vercel.app/preview) • [Examples](https://your-flo-table-docs.vercel.app/docs/examples)
+
+</div>
+
+## Key Features
+
+### Core Features
+- **Views System** - Multiple predefined filtered views with one-click switching
+- **Advanced Filtering** - Search, sort, and filter with custom components  
+- **Mobile First** - Responsive design with touch-friendly interactions
+- **Infinite Scroll** - Handle large datasets with automatic loading
+- **Action System** - Configurable toolbar with custom buttons and dropdowns
+
+### Developer Experience
+- **TypeScript First** - Full type safety and comprehensive IntelliSense
+- **Ant Design Integration** - Built on proven, professional UI components
+- **Flexible API** - Extensive customization options for any use case
+- **Performance Optimized** - Virtual scrolling and efficient rendering
+- **Theme Support** - Complete styling control and dark mode ready
+
+## � Quick Start
+
+### Installation
 
 ```bash
 npm install flo-table-with-views
+# or
+yarn add flo-table-with-views
 ```
 
-## 🏃 Quick Start
+### Basic Usage
 
 ```tsx
-import { TableWithViews } from 'flo-table-with-views';
+import { FloTableWithViews } from 'flo-table-with-views';
 import type { ProColumns } from '@ant-design/pro-components';
 
 interface User {
@@ -29,113 +49,380 @@ interface User {
   name: string;
   email: string;
   status: 'active' | 'inactive';
+  createdAt: string;
 }
 
-const columns: ProColumns<User>[] = [
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: 'Email',
-    dataIndex: 'email',
-    key: 'email',
-  },
-  {
-    title: 'Status',
-    dataIndex: 'status',
-    key: 'status',
-  },
-];
+const UserManagement = () => {
+  // Define your columns with full TypeScript support
+  const columns: ProColumns<User>[] = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      sorter: true,
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+      valueEnum: {
+        active: { text: 'Active', status: 'Success' },
+        inactive: { text: 'Inactive', status: 'Default' },
+      },
+    },
+  ];
 
-const views = [
-  {
-    key: 'all',
-    label: 'All Users',
-    shortLabel: 'All',
-    query: '',
-    filters: {},
-  },
-  {
-    key: 'active',
-    label: 'Active Users',
-    shortLabel: 'Active',
-    query: 'status:active',
-    filters: { status: 'active' },
-  },
-];
+  // Create multiple views of your data
+  const views = [
+    {
+      key: 'all',
+      label: 'All Users',
+      shortLabel: 'All',
+      query: '',
+      filters: {},
+    },
+    {
+      key: 'active',
+      label: 'Active Users Only',
+      shortLabel: 'Active',
+      query: 'status:active',
+      filters: { status: 'active' },
+    },
+    {
+      key: 'recent',
+      label: 'Recently Joined',
+      shortLabel: 'Recent',
+      query: 'created:last-7-days',
+      filters: { createdAt: 'last-7-days' },
+    },
+  ];
 
-export default function UserTable() {
-  const handleRequest = async (params: any, sort: any, filter: any) => {
-    // Your API call logic here
+  // Add custom actions to the toolbar
+  const actions = [
+    {
+      key: 'add',
+      label: 'Add User',
+      type: 'primary',
+      icon: <PlusOutlined />,
+      onClick: () => setAddModalVisible(true),
+    },
+    {
+      key: 'export',
+      label: 'Export Data',
+      onClick: () => exportUsers(),
+    },
+  ];
+
+  // Your data fetching function
+  const fetchUsers = async (params) => {
     const response = await fetch('/api/users', {
       method: 'POST',
-      body: JSON.stringify({ ...params, ...filter.filters, sort }),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(params),
     });
     const data = await response.json();
     
     return {
       data: data.users,
-      success: true,
       total: data.total,
+      success: true,
     };
   };
 
   return (
-    <TableWithViews<User>
-      id="user-table"
+    <FloTableWithViews
+      id="users-table"
       title="User Management"
+      description="Manage all users in your system"
       columns={columns}
-      request={handleRequest}
+      request={fetchUsers}
       views={views}
-      rowKey="id"
+      actions={actions}
+      enableInfiniteScroll={true}
+      initQuickFilterColumns={['name', 'email']}
     />
   );
-}
+};
 ```
 
-## 🎨 Customization
+## Live Examples
 
-The components use Ant Design defaults and provide className props for styling customization:
+Try FloTable with real-world examples:
+
+- **[User Management](https://your-demo.vercel.app/users)** - Role filtering, status management, activity tracking
+- **[Payment Processing](https://your-demo.vercel.app/payments)** - Transaction status, payment methods, date ranges
+- **[Student Records](https://your-demo.vercel.app/students)** - Grade tracking, enrollment status, course management
+- **[Mobile Experience](https://your-demo.vercel.app/mobile)** - Touch-optimized interface with infinite scroll
+
+## Mobile Experience
+
+FloTable automatically optimizes for mobile devices:
 
 ```tsx
-<TableWithViews<User>
-  id="user-table"
-  title="User Management"
-  columns={columns}
-  request={handleRequest}
-  views={views}
-  rowKey="id"
-  // Component-level customization
-  className="my-custom-wrapper"
-  headerClassName="custom-header"
-  titleClassName="text-3xl font-bold text-blue-600"
-  descriptionClassName="text-gray-600 italic"
-  cardClassName="shadow-lg border-2"
-  tabsClassName="custom-tabs"
-  tableClassName="custom-table"
+<FloTableWithViews
+  // Mobile-specific configurations
+  enableInfiniteScroll={true}        // Infinite scroll on mobile
+  defaultMobilePageSize={30}         // Larger page sizes for mobile
+  initQuickFilterColumns={['name']}  // Quick search for mobile
 />
 ```
 
-### Available className Props
+**Mobile Features:**
+- ✅ Touch-friendly interactions
+- ✅ Horizontal scrolling helpers
+- ✅ Adaptive column visibility
+- ✅ Infinite scroll loading
+- ✅ Compact UI elements
 
-- `className`: Main wrapper div
-- `headerClassName`: Header section container
-- `titleClassName`: Table title
-- `descriptionClassName`: Table description
-- `cardClassName`: Ant Design Card component
-- `tabsClassName`: Ant Design Tabs component  
-- `tableClassName`: ProTable component
+## Advanced Filtering
+
+Powerful filtering system with multiple options:
+
+```tsx
+const advancedColumns = [
+  {
+    title: 'Date Range',
+    dataIndex: 'createdAt',
+    valueType: 'dateRange',
+    sorter: true,
+  },
+  {
+    title: 'Price',
+    dataIndex: 'price',
+    sorter: true,
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }) => (
+      <CustomPriceFilter 
+        value={selectedKeys}
+        onChange={setSelectedKeys}
+        onConfirm={confirm}
+      />
+    ),
+  },
+];
+```
+
+**Filter Features:**
+- ✅ Column-specific filters
+- ✅ Quick search across multiple columns
+- ✅ Custom filter components
+- ✅ Date range filtering
+- ✅ Number range filtering
+
+## Performance Features
+
+Built for handling large datasets efficiently:
+
+```tsx
+<FloTableWithViews
+  enableInfiniteScroll={true}    // Infinite loading
+  defaultPageSize={50}           // Configurable page sizes  
+  // Virtual scrolling automatically enabled for large datasets
+/>
+```
+
+**Performance Benefits:**
+- ✅ Virtual scrolling for large datasets
+- ✅ Efficient re-rendering with memoization
+- ✅ Debounced search and filtering
+- ✅ Lazy loading of heavy components
+
+## Styling & Themes
+
+Complete control over appearance:
+
+```tsx
+<FloTableWithViews
+  // Custom CSS classes
+  className="custom-table"
+  headerClassName="bg-gradient-to-r from-blue-500 to-purple-600 text-white"
+  titleClassName="text-2xl font-bold"
+  cardClassName="shadow-2xl rounded-lg"
+  
+  // Inline styles
+  style={{ 
+    maxWidth: '1200px',
+    margin: '2rem auto' 
+  }}
+/>
+```
+
+**Styling Options:**
+- ✅ CSS classes for every component
+- ✅ Inline style support
+- ✅ Theme integration ready
+- ✅ Dark mode support
+- ✅ Responsive styling
+
+## Integration Examples
+
+### With React Query
+```tsx
+import { useQuery } from '@tanstack/react-query';
+
+const ReactQueryTable = () => {
+  const fetchData = async (params) => {
+    const { data } = await useQuery({
+      queryKey: ['users', params],
+      queryFn: () => api.getUsers(params),
+    });
+    return data;
+  };
+
+  return <FloTableWithViews request={fetchData} {...otherProps} />;
+};
+```
+
+### With Redux Toolkit
+```tsx
+import { useDispatch } from 'react-redux';
+
+const ReduxTable = () => {
+  const dispatch = useDispatch();
+  
+  const fetchData = async (params) => {
+    const result = await dispatch(fetchUsersThunk(params));
+    return {
+      data: result.payload.users,
+      total: result.payload.total,
+      success: true,
+    };
+  };
+
+  return <FloTableWithViews request={fetchData} {...otherProps} />;
+};
+```
+
+## Real-World Use Cases
+
+FloTable is perfect for:
+
+- **Admin Dashboards** - User management, analytics, system monitoring
+- **Payment Systems** - Transaction tracking, payment processing, financial reporting
+- **Education Management** - Student records, grade tracking, course administration
+- **CRM Systems** - Customer data, sales tracking, communication logs
+- **Data Analytics** - Report tables, data visualization, business intelligence
+
+## API Reference
+
+### Core Props
+
+| Prop | Type | Required | Description |
+|------|------|----------|-------------|
+| `id` | `string` | ✅ | Unique table identifier |
+| `title` | `string` | ✅ | Table title |
+| `columns` | `ProColumns[]` | ✅ | Column definitions |
+| `request` | `Function` | ✅ | Data fetching function |
+| `views` | `View[]` | ❌ | Predefined filtered views |
+| `actions` | `ActionConfig[]` | ❌ | Toolbar action buttons |
+
+### Feature Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `enableInfiniteScroll` | `boolean` | `true` | Enable infinite scroll |
+| `defaultPageSize` | `number` | `10` | Items per page |
+| `initQuickFilterColumns` | `string[]` | `[]` | Quick filter columns |
+
+[**Full API Documentation →**](https://your-docs.vercel.app/docs/api)
+
+## 🌟 Why Choose FloTable?
+
+### vs. Ant Design Pro Table
+- ✅ **Built-in Views System** - No manual setup needed
+- ✅ **Mobile Optimized** - Works perfectly on all devices
+- ✅ **Infinite Scroll** - Better performance for large datasets
+- ✅ **TypeScript First** - Superior developer experience
+
+### vs. TanStack Table  
+- ✅ **Complete UI Solution** - No need to build UI components
+- ✅ **Integrated Filtering** - Advanced filters out of the box
+- ✅ **Professional Design** - Ant Design components included
+- ✅ **Less Configuration** - Sensible defaults for rapid development
+
+### vs. React Table
+- ✅ **Modern Architecture** - Built for React 18+
+- ✅ **Mobile Ready** - Responsive design included
+- ✅ **Action System** - Toolbar management built-in
+- ✅ **View Management** - Multiple data perspectives
+
+## Documentation
+
+- **[Getting Started](https://your-docs.vercel.app/docs/intro)** - Quick start guide
+- **[⚡ Features Overview](https://your-docs.vercel.app/docs/features)** - Complete feature list
+- **[📋 Examples](https://your-docs.vercel.app/docs/examples)** - Real-world examples
+- **[🔧 API Reference](https://your-docs.vercel.app/docs/api)** - Complete API docs
+- **[🎨 Theming Guide](https://your-docs.vercel.app/docs/theme-configuration)** - Styling and themes
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+
+## 📄 License
+
+MIT © [Fladeed](https://github.com/Fladeed)
+
+---
+
+<div align="center">
+
+**[Get Started](https://your-docs.vercel.app/docs/intro) • [Documentation](https://your-docs.vercel.app) • [🎮 Live Demo](https://your-docs.vercel.app/preview)**
+
+Made with ❤️ by [Fladeed](https://github.com/Fladeed)
+
+</div>
+  
+  // Card and table styling
+  cardClassName="shadow-lg border-2 border-gray-200"
+  tabsClassName="custom-tabs"
+  
+  // Sub-components styling
+  tableClassName="custom-table-styles"
+/>
+```
+
+### All Available className Props
+
+| Prop | Description | Component |
+|------|-------------|-----------|
+| `className` | Main wrapper container | Root div |
+| `headerClassName` | Header section container | Header div |
+| `titleClassName` | Table title styling | H1 element |
+| `descriptionClassName` | Table description styling | P element |
+| `cardClassName` | Ant Design Card component | Card |
+| `tabsClassName` | Ant Design Tabs component | Tabs |
+| `tableClassName` | ProTable component styling | ProTable |
+
+### Filter Component Styling
+
+```tsx
+// Filter components also support custom styling
+<FloTableFilters
+  // ... other props
+  className="custom-filter-container"
+  buttonClassName="custom-filter-button bg-blue-500 text-white"
+/>
+
+<QuickFilter
+  // ... other props
+  className="custom-quick-filter border-blue-300"
+  buttonClassName="custom-button hover:bg-blue-50"
+/>
+```
 
 ### Using with CSS Modules
 
 ```tsx
 import styles from './MyTable.module.css';
 
-<TableWithViews
+<FloTableWithViews
   titleClassName={styles.customTitle}
   cardClassName={styles.customCard}
+  tableClassName={styles.customTable}
   // ... other props
 />
 ```
@@ -143,44 +430,25 @@ import styles from './MyTable.module.css';
 ### Using with Tailwind CSS
 
 ```tsx
-<TableWithViews
-  titleClassName="text-2xl font-bold text-gray-900 dark:text-white"
-  cardClassName="bg-white dark:bg-gray-800 rounded-lg shadow-md"
-  headerClassName="mb-4 p-4"
+<FloTableWithViews
+  className="max-w-6xl mx-auto"
+  headerClassName="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-6 rounded-t-lg"
+  titleClassName="text-2xl font-bold"
+  descriptionClassName="text-blue-100 mt-2"
+  cardClassName="shadow-2xl border-0 rounded-lg"
+  tabsClassName="[&_.ant-tabs-tab]:text-blue-600"
+  tableClassName="[&_.ant-table-thead]:bg-gray-50"
   // ... other props
 />
 ```
 
-## 🎨 Dark Mode & Theme Support
+### Dark Mode Support
 
-For proper dark mode support, wrap your app with the provided ConfigProvider:
-
-```tsx
-import { FloTableConfigProvider, TableWithViews } from 'flo-table-with-views';
-
-function App() {
-  const [isDark, setIsDark] = useState(false);
-
-  return (
-    <FloTableConfigProvider 
-      isDark={isDark}
-      primaryColor="#1890ff"
-    >
-      <TableWithViews
-        // ... your props
-      />
-    </FloTableConfigProvider>
-  );
-}
-```
-
-### Manual Theme Configuration
-
-You can also use Ant Design's ConfigProvider directly:
+For dark mode support, wrap your app with Ant Design's ConfigProvider:
 
 ```tsx
 import { ConfigProvider, theme } from 'antd';
-import { TableWithViews } from 'flo-table-with-views';
+import { FloTableWithViews } from 'flo-table-with-views';
 
 function App() {
   const [isDark, setIsDark] = useState(false);
@@ -190,23 +458,92 @@ function App() {
       theme={{
         algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
         token: {
-          colorPrimary: '#1890ff',
+          colorPrimary: '#1890ff', // Your brand color
         },
       }}
     >
-      <TableWithViews
-        // ... your props
+      <FloTableWithViews
+        className={isDark ? 'dark-theme-table' : 'light-theme-table'}
+        // ... other props
       />
     </ConfigProvider>
   );
 }
 ```
 
-## 📖 Documentation & Live Preview
+### Advanced Theming (Optional)
+
+For advanced theming needs, you can still use the provided theming utilities:
+
+```tsx
+import { AntdConfigProvider, detectTheme } from 'flo-table-with-views';
+
+function App() {
+  return (
+    <AntdConfigProvider 
+      primaryColor="#1890ff"
+      themeDetector={detectTheme}
+    >
+      <FloTableWithViews
+        // ... your props
+      />
+    </AntdConfigProvider>
+  );
+}
+```
+
+## Filtering Features
+
+### Search Functionality
+The component includes a built-in search input that filters across all searchable columns:
+
+```tsx
+<TableWithViews
+  // ... other props
+  initQuickFilterColumns={['name', 'email']} // Columns to include in quick search
+/>
+```
+
+### Filter Drawer
+Click the "All Filters" button to open a drawer with detailed filtering options for each column:
+
+- **Text Columns**: Free text search
+- **Select Columns**: Dropdown with predefined options  
+- **Date Columns**: Date picker for date ranges
+- **Number Columns**: Numeric input with validation
+
+### Custom Filter Configuration
+Define which columns should be available for quick filtering:
+
+```tsx
+const columns: ProColumns<User>[] = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    valueType: 'text', // Enables text filter
+  },
+  {
+    title: 'Status',
+    dataIndex: 'status',
+    valueType: 'select',
+    valueEnum: {
+      active: 'Active',
+      inactive: 'Inactive',
+    },
+  },
+  {
+    title: 'Created Date',
+    dataIndex: 'createdAt',
+    valueType: 'date', // Enables date filter
+  },
+];
+```
+
+## Documentation & Live Preview
 
 - **Documentation & Live Preview**: [http://localhost:3001](http://localhost:3001)
 
-## 🎮 Single Unified Application
+## Single Unified Application
 
 This repository includes a unified application that serves both documentation and live preview:
 
@@ -227,7 +564,7 @@ The unified app includes:
 - Custom actions and responsive design
 - Mobile optimization examples
 
-## 🏗️ Repository Structure
+## Repository Structure
 
 ```
 flo-table-with-views/
@@ -251,7 +588,7 @@ flo-table-with-views/
 └── dist/                  # Built package
 ```
 
-## 🔧 Development
+## Development
 
 ### Building the Library
 
@@ -268,7 +605,7 @@ npm install
 npm run dev
 ```
 
-## 📋 Components
+## Components
 
 ### TableWithViews&lt;T&gt;
 
@@ -290,7 +627,7 @@ Basic table wrapper around ProTable with enhanced request handling.
 
 Toolbar actions component for custom buttons.
 
-## 🎯 Key Features
+## Key Features
 
 ### Views System
 - Create multiple filtered views of your data
@@ -353,7 +690,7 @@ flo-table-with-views/
 └── README.md              # This file
 ```
 
-## 🚀 Development
+## Development
 
 ### Core Library Development
 

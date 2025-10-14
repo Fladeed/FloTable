@@ -5,8 +5,8 @@ import type * as Preset from '@docusaurus/preset-classic';
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
-  title: 'FloTable with Views',
-  tagline: 'Powerful, responsive table components for React with built-in views system',
+  title: 'FloTable',
+  tagline: 'Powerful, responsive table components with views system, advanced filtering & mobile optimization',
   favicon: 'img/favicon.ico',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
@@ -45,7 +45,7 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/Fladeed/EcomStack/tree/main/flo-table-with-views/docs-new/',
+            'https://github.com/Fladeed/EcomStack/tree/main/FloTable/docs-new/',
         },
         blog: {
           showReadingTime: true,
@@ -56,7 +56,7 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/Fladeed/EcomStack/tree/main/flo-table-with-views/docs-new/',
+            'https://github.com/Fladeed/EcomStack/tree/main/FloTable/docs-new/',
           // Useful options to enforce blogging best practices
           onInlineTags: 'warn',
           onInlineAuthors: 'warn',
@@ -73,7 +73,7 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'FloTable with Views',
+      title: 'FloTable',
       logo: {
         alt: 'FloTable Logo',
         src: 'img/logo.svg',
@@ -92,7 +92,7 @@ const config: Config = {
         },
         { to: '/blog', label: 'Changelog', position: 'left' },
         {
-          href: 'https://github.com/Fladeed/EcomStack/tree/main/flo-table-with-views',
+          href: 'https://github.com/Fladeed/FloTable',
           label: 'GitHub',
           position: 'right',
         },
@@ -140,12 +140,12 @@ const config: Config = {
             },
             {
               label: 'GitHub',
-              href: 'https://github.com/Fladeed/EcomStack/tree/main/flo-table-with-views',
+              href: 'https://github.com/Fladeed/FloTable',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} FloTable with Views. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} FloTable. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,
