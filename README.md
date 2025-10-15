@@ -8,7 +8,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-[Documentation](https://flotable-docs.vercel.app) • [🎮 Live Demo](https://flotable-docs.vercel.app/preview) • [Examples](https://flotable-docs.vercel.app/docs/examples)
+[Documentation](https://flotable-docs.vercel.app) • [🎮 Live Demo](https://flo-table.vercel.app/preview) • [Examples](https://flotable-docs.vercel.app/docs/examples)
 
 </div>
 
@@ -154,10 +154,10 @@ const UserManagement = () => {
 
 Try FloTable with real-world examples:
 
-- **[User Management](https://flotable-docs.vercel.app/preview/users)** - Role filtering, status management, activity tracking
-- **[Payment Processing](https://flotable-docs.vercel.app/preview/payments)** - Transaction status, payment methods, date ranges
-- **[Student Records](https://flotable-docs.vercel.app/preview/students)** - Grade tracking, enrollment status, course management
-- **[Mobile Experience](https://flotable-docs.vercel.app/preview/mobile)** - Touch-optimized interface with infinite scroll
+- **[User Management](https://flo-table.vercel.app/preview/users)** - Role filtering, status management, activity tracking
+- **[Payment Processing](https://flo-table.vercel.app/preview/payments)** - Transaction status, payment methods, date ranges
+- **[Student Records](https://flo-table.vercel.app/preview/students)** - Grade tracking, enrollment status, course management
+- **[Mobile Experience](https://flo-table.vercel.app/preview/mobile)** - Touch-optimized interface with infinite scroll
 
 ## Mobile Experience
 
@@ -370,7 +370,7 @@ MIT © [Fladeed](https://github.com/Fladeed)
 
 <div align="center">
 
-**[Get Started](https://flotable-docs.vercel.app/docs/intro) • [Documentation](https://flotable-docs.vercel.app) • [🎮 Live Demo](https://flotable-docs.vercel.app/preview)**
+**[Get Started](https://flotable-docs.vercel.app/docs/intro) • [Documentation](https://flotable-docs.vercel.app) • [🎮 Live Demo](https://flo-table.vercel.app/preview)**
 
 Made with ❤️ by [Fladeed](https://github.com/Fladeed)
 
