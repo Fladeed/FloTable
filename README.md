@@ -8,7 +8,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-[Documentation](https://your-flo-table-docs.vercel.app) • [🎮 Live Demo](https://your-flo-table-docs.vercel.app/preview) • [Examples](https://your-flo-table-docs.vercel.app/docs/examples)
+[Documentation](https://flotable-docs.vercel.app) • [🎮 Live Demo](https://flotable-docs.vercel.app/preview) • [Examples](https://flotable-docs.vercel.app/docs/examples)
 
 </div>
 
@@ -154,10 +154,10 @@ const UserManagement = () => {
 
 Try FloTable with real-world examples:
 
-- **[User Management](https://your-demo.vercel.app/users)** - Role filtering, status management, activity tracking
-- **[Payment Processing](https://your-demo.vercel.app/payments)** - Transaction status, payment methods, date ranges
-- **[Student Records](https://your-demo.vercel.app/students)** - Grade tracking, enrollment status, course management
-- **[Mobile Experience](https://your-demo.vercel.app/mobile)** - Touch-optimized interface with infinite scroll
+- **[User Management](https://flotable-docs.vercel.app/preview/users)** - Role filtering, status management, activity tracking
+- **[Payment Processing](https://flotable-docs.vercel.app/preview/payments)** - Transaction status, payment methods, date ranges
+- **[Student Records](https://flotable-docs.vercel.app/preview/students)** - Grade tracking, enrollment status, course management
+- **[Mobile Experience](https://flotable-docs.vercel.app/preview/mobile)** - Touch-optimized interface with infinite scroll
 
 ## Mobile Experience
 
@@ -328,7 +328,7 @@ FloTable is perfect for:
 | `defaultPageSize` | `number` | `10` | Items per page |
 | `initQuickFilterColumns` | `string[]` | `[]` | Quick filter columns |
 
-[**Full API Documentation →**](https://your-docs.vercel.app/docs/api)
+[**Full API Documentation →**](https://flotable-docs.vercel.app/docs/api)
 
 ## 🌟 Why Choose FloTable?
 
@@ -352,11 +352,11 @@ FloTable is perfect for:
 
 ## Documentation
 
-- **[Getting Started](https://your-docs.vercel.app/docs/intro)** - Quick start guide
-- **[⚡ Features Overview](https://your-docs.vercel.app/docs/features)** - Complete feature list
-- **[📋 Examples](https://your-docs.vercel.app/docs/examples)** - Real-world examples
-- **[🔧 API Reference](https://your-docs.vercel.app/docs/api)** - Complete API docs
-- **[🎨 Theming Guide](https://your-docs.vercel.app/docs/theme-configuration)** - Styling and themes
+- **[Getting Started](https://flotable-docs.vercel.app/docs/intro)** - Quick start guide
+- **[⚡ Features Overview](https://flotable-docs.vercel.app/docs/features)** - Complete feature list
+- **[📋 Examples](https://flotable-docs.vercel.app/docs/examples)** - Real-world examples
+- **[🔧 API Reference](https://flotable-docs.vercel.app/docs/api)** - Complete API docs
+- **[🎨 Theming Guide](https://flotable-docs.vercel.app/docs/theme-configuration)** - Styling and themes
 
 ## 🤝 Contributing
 
@@ -370,368 +370,8 @@ MIT © [Fladeed](https://github.com/Fladeed)
 
 <div align="center">
 
-**[Get Started](https://your-docs.vercel.app/docs/intro) • [Documentation](https://your-docs.vercel.app) • [🎮 Live Demo](https://your-docs.vercel.app/preview)**
+**[Get Started](https://flotable-docs.vercel.app/docs/intro) • [Documentation](https://flotable-docs.vercel.app) • [🎮 Live Demo](https://flotable-docs.vercel.app/preview)**
 
 Made with ❤️ by [Fladeed](https://github.com/Fladeed)
 
 </div>
-  
-  // Card and table styling
-  cardClassName="shadow-lg border-2 border-gray-200"
-  tabsClassName="custom-tabs"
-  
-  // Sub-components styling
-  tableClassName="custom-table-styles"
-/>
-```
-
-### All Available className Props
-
-| Prop | Description | Component |
-|------|-------------|-----------|
-| `className` | Main wrapper container | Root div |
-| `headerClassName` | Header section container | Header div |
-| `titleClassName` | Table title styling | H1 element |
-| `descriptionClassName` | Table description styling | P element |
-| `cardClassName` | Ant Design Card component | Card |
-| `tabsClassName` | Ant Design Tabs component | Tabs |
-| `tableClassName` | ProTable component styling | ProTable |
-
-### Filter Component Styling
-
-```tsx
-// Filter components also support custom styling
-<FloTableFilters
-  // ... other props
-  className="custom-filter-container"
-  buttonClassName="custom-filter-button bg-blue-500 text-white"
-/>
-
-<QuickFilter
-  // ... other props
-  className="custom-quick-filter border-blue-300"
-  buttonClassName="custom-button hover:bg-blue-50"
-/>
-```
-
-### Using with CSS Modules
-
-```tsx
-import styles from './MyTable.module.css';
-
-<FloTableWithViews
-  titleClassName={styles.customTitle}
-  cardClassName={styles.customCard}
-  tableClassName={styles.customTable}
-  // ... other props
-/>
-```
-
-### Using with Tailwind CSS
-
-```tsx
-<FloTableWithViews
-  className="max-w-6xl mx-auto"
-  headerClassName="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-6 rounded-t-lg"
-  titleClassName="text-2xl font-bold"
-  descriptionClassName="text-blue-100 mt-2"
-  cardClassName="shadow-2xl border-0 rounded-lg"
-  tabsClassName="[&_.ant-tabs-tab]:text-blue-600"
-  tableClassName="[&_.ant-table-thead]:bg-gray-50"
-  // ... other props
-/>
-```
-
-### Dark Mode Support
-
-For dark mode support, wrap your app with Ant Design's ConfigProvider:
-
-```tsx
-import { ConfigProvider, theme } from 'antd';
-import { FloTableWithViews } from 'flo-table-with-views';
-
-function App() {
-  const [isDark, setIsDark] = useState(false);
-
-  return (
-    <ConfigProvider
-      theme={{
-        algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
-        token: {
-          colorPrimary: '#1890ff', // Your brand color
-        },
-      }}
-    >
-      <FloTableWithViews
-        className={isDark ? 'dark-theme-table' : 'light-theme-table'}
-        // ... other props
-      />
-    </ConfigProvider>
-  );
-}
-```
-
-### Advanced Theming (Optional)
-
-For advanced theming needs, you can still use the provided theming utilities:
-
-```tsx
-import { AntdConfigProvider, detectTheme } from 'flo-table-with-views';
-
-function App() {
-  return (
-    <AntdConfigProvider 
-      primaryColor="#1890ff"
-      themeDetector={detectTheme}
-    >
-      <FloTableWithViews
-        // ... your props
-      />
-    </AntdConfigProvider>
-  );
-}
-```
-
-## Filtering Features
-
-### Search Functionality
-The component includes a built-in search input that filters across all searchable columns:
-
-```tsx
-<TableWithViews
-  // ... other props
-  initQuickFilterColumns={['name', 'email']} // Columns to include in quick search
-/>
-```
-
-### Filter Drawer
-Click the "All Filters" button to open a drawer with detailed filtering options for each column:
-
-- **Text Columns**: Free text search
-- **Select Columns**: Dropdown with predefined options  
-- **Date Columns**: Date picker for date ranges
-- **Number Columns**: Numeric input with validation
-
-### Custom Filter Configuration
-Define which columns should be available for quick filtering:
-
-```tsx
-const columns: ProColumns<User>[] = [
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    valueType: 'text', // Enables text filter
-  },
-  {
-    title: 'Status',
-    dataIndex: 'status',
-    valueType: 'select',
-    valueEnum: {
-      active: 'Active',
-      inactive: 'Inactive',
-    },
-  },
-  {
-    title: 'Created Date',
-    dataIndex: 'createdAt',
-    valueType: 'date', // Enables date filter
-  },
-];
-```
-
-## Documentation & Live Preview
-
-- **Documentation & Live Preview**: [https://flotable-docs.vercel.app](https://flotable-docs.vercel.app)
-
-## Single Unified Application
-
-This repository includes a unified application that serves both documentation and live preview:
-
-```bash
-# Run the documentation and preview app
-cd docs
-npm install
-npm run dev
-# Opens on http://localhost:3000
-```
-
-The unified app includes:
-- Complete documentation with installation guides and API reference
-- Interactive restaurant management demo with realistic data
-- Multiple table examples (Restaurants, Menu Items)
-- Multiple views (All, Open, Closed, Pending, Top Rated)
-- Search and filtering functionality
-- Custom actions and responsive design
-- Mobile optimization examples
-
-## Repository Structure
-
-```
-FloTable/
-├── src/                    # Component library source
-│   ├── components/
-│   │   ├── TableWithViews.tsx
-│   │   ├── SimpleTable.tsx
-│   │   ├── TableActions.tsx
-│   │   ├── AntdConfigProvider.tsx
-│   │   └── withTheme.tsx
-│   ├── hooks/
-│   │   ├── useIsMobile.ts
-│   │   └── useTranslation.tsx
-│   ├── utils/
-│   │   ├── cn.ts
-│   │   └── theme.ts
-│   └── index.ts
-├── docs/                  # Unified documentation and preview app
-│   ├── docusaurus.config.ts
-│   ├── app/
-│   │   ├── page.tsx       # Main landing page
-│   │   ├── docs/page.tsx  # Documentation
-│   │   ├── preview/page.tsx # Live preview
-│   │   └── examples/page.tsx # Examples gallery
-│   ├── src/
-│   │   ├── components/    # Demo components (RestaurantsTable, etc.)
-│   │   ├── data/          # Mock data and API
-│   │   └── types/         # Demo types
-│   ├── docs/             # Documentation pages
-│   └── static/           # Static assets
-├── package.json           # Core library dependencies
-├── tsconfig.json          # TypeScript configuration
-├── rollup.config.js       # Build configuration
-└── README.md              # This file
-```
-
-## Development
-
-### Building the Library
-
-```bash
-# Install dependencies
-npm install
-
-# Build the library
-npm run build
-
-# Run tests  
-npm test
-
-# Watch mode for development
-npm run dev
-```
-
-### Documentation & Preview
-
-```bash
-# Navigate to docs folder
-cd docs
-
-# Install dependencies
-npm install
-
-# Start development server (usually runs on port 3000)
-npm run dev
-
-# Build for production
-npm run build
-```
-
-## Components
-
-### TableWithViews\<T\>
-
-Main table component with views system and advanced features.
-
-**Props:**
-- `columns: ProColumns<T>[]` - Table column definitions
-- `views: View[]` - Predefined filtered views
-- `request: RequestFunction` - Data fetching function
-- `actions?: Action[]` - Custom toolbar actions
-- `title?: string` - Table title
-- `description?: string` - Table description
-
-### SimpleTable\<T\>
-
-Basic table wrapper around ProTable with enhanced request handling.
-
-### TableActions
-
-Toolbar actions component for custom buttons.
-
-## Key Features
-
-### Views System
-- Create multiple filtered views of your data
-- Each view can have custom filters and search queries
-- Responsive view switching on mobile
-
-### Mobile Optimization
-- Automatic column hiding on smaller screens
-- Touch-friendly interactions
-- Responsive pagination and actions
-
-### TypeScript Support
-- Full type safety with generic components
-- Comprehensive type definitions
-- IntelliSense support in IDE
-
-### Customization
-- Custom actions in toolbar
-- Configurable pagination
-- Theme customization
-- Custom empty states
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-### Core Library Development
-
-```bash
-# Install dependencies
-npm install
-
-# Build the library
-npm run build
-
-# Run tests
-npm test
-
-# Watch mode for development
-npm run dev
-```
-
-### Documentation & Preview
-
-```bash
-# Navigate to docs folder
-cd docs
-
-# Install dependencies
-npm install
-
-# Start development server (usually runs on port 3000)
-npm run dev
-
-# Build for production
-npm run build
-```
-
-## 🙏 Acknowledgments
-
-- Built on [Ant Design Pro Components](https://procomponents.ant.design/)
-- Inspired by modern data table patterns
-- Mobile-first responsive design principles
-
-## 📞 Support
-
-- **Documentation & Preview**: [https://flotable-docs.vercel.app](https://flotable-docs.vercel.app)
-- **Issues**: [GitHub Issues](https://github.com/Fladeed/FloTable/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/Fladeed/FloTable/discussions)
