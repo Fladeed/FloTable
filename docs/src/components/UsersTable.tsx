@@ -274,7 +274,7 @@ const userColumns: ProColumns<any>[] = [
     ),
   },
   {
-    title: 'Last Login',
+    title: 'Login',
     dataIndex: 'lastLogin',
     key: 'lastLogin',
     valueType: 'dateTime',
@@ -299,7 +299,6 @@ const userColumns: ProColumns<any>[] = [
     title: 'Actions',
     key: 'actions',
     width: 180,
-    fixed: 'right',
     render: (_, record) => (
       <Space size="small">
         <Tooltip title="Send Message">

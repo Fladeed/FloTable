@@ -102,13 +102,14 @@ export function InfiniteScrollTable<T extends Record<string, any>>({
                             ]
                         }}
                         cardBordered={false}
-                        className="rounded-lg"
+                        className={`rounded-lg ${isMobile ? 'mobile-table-fix' : ''}`}
                         rowKey={rowKey}
                         columns={responsiveColumns(columns, mobileTableType, dataName, isMobile)}
                         request={enhancedRequest}
                         search={false}
                         bordered={true}
                         showHeader={true}
+                        size={isMobile ? 'small' : undefined}
                         pagination={false}
                         dataSource={allData}
                         scroll={{

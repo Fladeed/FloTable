@@ -30,8 +30,8 @@ export default function PreviewPage() {
             title="Live Preview"
             description="Interactive demonstration of FloTable components showcasing Ant Design ProTable features"
         >
-            <div className="container" style={{ padding: '2rem 0' }}>
-                <div style={{ marginBottom: '2rem' }}>
+            <div className="container preview-page-container">
+                <div className="preview-page-header">
                     <h1>Live Preview - FloTable with Ant Design ProTable Features</h1>
                     <p>
                         Interactive demonstration showcasing advanced Ant Design ProTable features including:
@@ -45,10 +45,7 @@ export default function PreviewPage() {
                         defaultActiveKey="users"
                         items={items}
                         size="large"
-                        style={{
-                            padding: '1rem',
-                            borderRadius: '8px'
-                        }}
+                        className="preview-page-tabs"
                     />
                 </AntdConfigProvider>
             </div>

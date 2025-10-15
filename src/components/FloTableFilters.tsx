@@ -42,6 +42,7 @@ export const FloTableFilters = <T,>({ columns, quickFilterColumns, setFilterVisi
 
     const quickFilterFields = columns
         .filter(col => quickFilterColumns.includes(col.dataIndex as string))
+        .filter(col => !col.hideInTable) // Filter out hidden columns
         .map(col => {
             return (
                 <QuickFilter<T>

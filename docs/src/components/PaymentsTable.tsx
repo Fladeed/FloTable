@@ -297,7 +297,7 @@ const paymentColumns: ProColumns<Payment>[] = [
     },
   },
   {
-    title: 'Transaction Date',
+    title: 'Date',
     dataIndex: 'date',
     key: 'date',
     width: 200,
@@ -325,7 +325,6 @@ const paymentColumns: ProColumns<Payment>[] = [
     title: 'Actions',
     key: 'actions',
     width: 180,
-    fixed: 'right',
     render: (_, record) => (
       <Space size="small" direction="vertical">
         <Space size="small">
@@ -499,7 +498,7 @@ export const PaymentsTable: React.FC = () => {
       request={fetchPayments}
       views={paymentViews}
       actions={paymentActions}
-      initQuickFilterColumns={['customer', 'transactionId', 'description', 'method', 'status']}
+      initQuickFilterColumns={['customer', 'method', 'status']}
       enableInfiniteScroll={false}
       defaultPageSize={15}
       className="full-width-table"

@@ -16,7 +16,7 @@ export function useInfiniteScroll<T extends Record<string, any>>(
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   
   // Debounce ref to prevent rapid successive calls
-  const loadMoreTimeoutRef = useRef<NodeJS.Timeout>(null);
+  const loadMoreTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Enhanced request function that handles infinite scroll
   const enhancedRequest = useCallback(async (
