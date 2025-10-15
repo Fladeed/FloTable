@@ -47,21 +47,7 @@ const config: Config = {
           editUrl:
             'https://github.com/Fladeed/EcomStack/tree/main/FloTable/docs-new/',
         },
-        blog: {
-          showReadingTime: true,
-          feedOptions: {
-            type: ['rss', 'atom'],
-            xslt: true,
-          },
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/Fladeed/EcomStack/tree/main/FloTable/docs-new/',
-          // Useful options to enforce blogging best practices
-          onInlineTags: 'warn',
-          onInlineAuthors: 'warn',
-          onUntruncatedBlogPosts: 'warn',
-        },
+        blog: false,
         theme: {
           customCss: './src/css/custom.css',
         },
@@ -90,7 +76,6 @@ const config: Config = {
           label: 'Live Preview',
           position: 'left',
         },
-        { to: '/blog', label: 'Changelog', position: 'left' },
         {
           href: 'https://github.com/Fladeed/FloTable',
           label: 'GitHub',
@@ -135,17 +120,13 @@ const config: Config = {
           title: 'More',
           items: [
             {
-              label: 'Changelog',
-              to: '/blog',
-            },
-            {
               label: 'GitHub',
               href: 'https://github.com/Fladeed/FloTable',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} FloTable. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Fladeed. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,

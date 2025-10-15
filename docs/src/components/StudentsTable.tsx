@@ -376,7 +376,6 @@ const studentColumns: ProColumns<Student>[] = [
     title: 'Actions',
     key: 'actions',
     width: 160,
-    fixed: 'right',
     render: (_, record) => (
       <Space size="small" direction="vertical">
         <Space size="small">

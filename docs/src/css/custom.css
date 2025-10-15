@@ -41,6 +41,25 @@
   overflow-x: auto;
 }
 
+/* Hide Ant Design's measure row on all mobile devices */
+@media (max-width: 768px) {
+  .ant-table-measure-row {
+    display: none !important;
+    height: 0 !important;
+    line-height: 0 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+  
+  .ant-table-measure-row td {
+    display: none !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+  }
+}
+
 /* Responsive table improvements */
 @media (max-width: 768px) {
   .full-width-table .ant-table-tbody > tr > td {
@@ -49,6 +68,57 @@
   
   .full-width-table .ant-table-thead > tr > th {
     padding: 8px 4px !important;
+  }
+
+  /* Fix empty row issue on mobile - Hide Ant Design's measure row */
+  .mobile-table-fix .ant-table-measure-row,
+  .full-width-table .ant-table-measure-row {
+    display: none !important;
+    height: 0 !important;
+    line-height: 0 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+
+  /* Ensure measure row cells are completely hidden */
+  .mobile-table-fix .ant-table-measure-row td,
+  .full-width-table .ant-table-measure-row td {
+    display: none !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+  }
+
+  /* Fix first data row after hidden measure row */
+  .mobile-table-fix .ant-table-tbody > tr:first-child > td {
+    border-top: none !important;
+  }
+
+  .mobile-table-fix .ant-table-thead > tr > th {
+    border-bottom: 1px solid var(--ifm-color-emphasis-300) !important;
+  }
+
+  /* Remove any phantom spacing/margins that might cause empty rows */
+  .mobile-table-fix .ant-table-tbody {
+    border-spacing: 0 !important;
+  }
+
+  .mobile-table-fix .ant-table-tbody > tr {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Ensure header and body are properly connected */
+  .mobile-table-fix .ant-table-container {
+    border-spacing: 0 !important;
+    border-collapse: collapse !important;
+  }
+
+  /* Remove any extra space in table layout */
+  .mobile-table-fix .ant-table {
+    border-spacing: 0 !important;
+    border-collapse: collapse !important;
   }
 }
 
@@ -104,4 +174,71 @@
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
+}
+
+/* Preview page mobile spacing fixes */
+.preview-page-container {
+  padding: 2rem 1rem !important;
+}
+
+.preview-page-header {
+  margin-bottom: 2rem;
+  padding: 0 0.5rem;
+}
+
+.preview-page-header h1 {
+  margin: 0 0 1rem 0;
+  padding: 0 0.5rem;
+}
+
+.preview-page-header p {
+  margin: 0;
+  padding: 0 0.5rem;
+  line-height: 1.6;
+}
+
+.preview-page-tabs {
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 768px) {
+  .preview-page-container {
+    padding: 1rem 0.75rem !important;
+  }
+  
+  .preview-page-header {
+    padding: 0 0.25rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .preview-page-header h1 {
+    padding: 0 0.25rem;
+    font-size: 1.5rem;
+    line-height: 1.3;
+  }
+  
+  .preview-page-header p {
+    padding: 0 0.25rem;
+    font-size: 0.9rem;
+  }
+  
+  .preview-page-tabs {
+    padding: 0.5rem;
+    margin: 0 -0.25rem;
+  }
+  
+  .preview-page-tabs .ant-tabs-nav {
+    margin: 0 0 1rem 0;
+    padding: 0 0.5rem;
+  }
+  
+  .preview-page-tabs .ant-tabs-content-holder {
+    padding: 0;
+  }
+  
+  .preview-page-tabs .ant-tabs-tabpane {
+    padding: 0;
+  }
 }

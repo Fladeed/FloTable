@@ -54,7 +54,14 @@ export function PaginatedTable<T extends Record<string, any>>({
         params={{ filters }}
         key={`${dataName}-${isMobile}-${mobileTableType}`}
         ghost={true}
-        style={{ width: '100%' }}
+        style={{ 
+          width: '100%',
+          ...(isMobile && {
+            '--ant-table-header-cell-height': '44px',
+            '--ant-table-cell-padding-vertical': '8px',
+            '--ant-table-cell-padding-horizontal': '8px',
+          } as any)
+        }}
         locale={{
           ...enUS.Table,
         }}
@@ -115,6 +122,7 @@ export function PaginatedTable<T extends Record<string, any>>({
             overscrollBehavior: 'contain',
           })
         }}
+        className={isMobile ? 'mobile-table-fix' : ''}
       />
     </div>
   );
