@@ -541,7 +541,7 @@ const columns: ProColumns<User>[] = [
 
 ## Documentation & Live Preview
 
-- **Documentation & Live Preview**: [http://localhost:3001](http://localhost:3001)
+- **Documentation & Live Preview**: [https://flotable-docs.vercel.app](https://flotable-docs.vercel.app)
 
 ## Single Unified Application
 
@@ -552,7 +552,7 @@ This repository includes a unified application that serves both documentation an
 cd docs
 npm install
 npm run dev
-# Opens on http://localhost:3001
+# Opens on http://localhost:3000
 ```
 
 The unified app includes:
@@ -567,25 +567,38 @@ The unified app includes:
 ## Repository Structure
 
 ```
-flo-table-with-views/
+FloTable/
 ├── src/                    # Component library source
 │   ├── components/
 │   │   ├── TableWithViews.tsx
 │   │   ├── SimpleTable.tsx
-│   │   └── TableActions.tsx
+│   │   ├── TableActions.tsx
+│   │   ├── AntdConfigProvider.tsx
+│   │   └── withTheme.tsx
 │   ├── hooks/
-│   └── types/
+│   │   ├── useIsMobile.ts
+│   │   └── useTranslation.tsx
+│   ├── utils/
+│   │   ├── cn.ts
+│   │   └── theme.ts
+│   └── index.ts
 ├── docs/                  # Unified documentation and preview app
+│   ├── docusaurus.config.ts
 │   ├── app/
 │   │   ├── page.tsx       # Main landing page
 │   │   ├── docs/page.tsx  # Documentation
 │   │   ├── preview/page.tsx # Live preview
 │   │   └── examples/page.tsx # Examples gallery
-│   └── src/
-│       ├── components/    # Demo components (RestaurantsTable, etc.)
-│       ├── data/          # Mock data and API
-│       └── types/         # Demo types
-└── dist/                  # Built package
+│   ├── src/
+│   │   ├── components/    # Demo components (RestaurantsTable, etc.)
+│   │   ├── data/          # Mock data and API
+│   │   └── types/         # Demo types
+│   ├── docs/             # Documentation pages
+│   └── static/           # Static assets
+├── package.json           # Core library dependencies
+├── tsconfig.json          # TypeScript configuration
+├── rollup.config.js       # Build configuration
+└── README.md              # This file
 ```
 
 ## Development
@@ -593,21 +606,38 @@ flo-table-with-views/
 ### Building the Library
 
 ```bash
+# Install dependencies
 npm install
+
+# Build the library
 npm run build
+
+# Run tests  
+npm test
+
+# Watch mode for development
+npm run dev
 ```
 
-### Running Documentation & Preview
+### Documentation & Preview
 
 ```bash
+# Navigate to docs folder
 cd docs
+
+# Install dependencies
 npm install
+
+# Start development server (usually runs on port 3000)
 npm run dev
+
+# Build for production
+npm run build
 ```
 
 ## Components
 
-### TableWithViews&lt;T&gt;
+### TableWithViews\<T\>
 
 Main table component with views system and advanced features.
 
@@ -619,7 +649,7 @@ Main table component with views system and advanced features.
 - `title?: string` - Table title
 - `description?: string` - Table description
 
-### SimpleTable&lt;T&gt;
+### SimpleTable\<T\>
 
 Basic table wrapper around ProTable with enhanced request handling.
 
@@ -662,36 +692,6 @@ Toolbar actions component for custom buttons.
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## � Project Structure
-
-```
-flo-table-with-views/
-├── src/                    # Core component library
-│   ├── components/         # Main table components
-│   │   ├── TableWithViews/ # Primary component
-│   │   ├── SimpleTable/    # Basic table component
-│   │   └── TableActions/   # Action buttons component
-│   ├── types/             # TypeScript definitions
-│   ├── hooks/             # Custom React hooks
-│   └── index.ts           # Main exports
-├── docs/                  # Documentation and preview app
-│   ├── app/               # Next.js app router pages
-│   │   ├── page.tsx       # Landing page
-│   │   ├── docs/          # API documentation
-│   │   ├── preview/       # Live demos
-│   │   └── examples/      # Code examples
-│   ├── src/               # Demo components and data
-│   │   ├── components/    # Example table implementations
-│   │   ├── data/          # Mock data and API
-│   │   └── types/         # Demo type definitions
-│   └── public/            # Static assets
-├── package.json           # Core library dependencies
-├── tsconfig.json          # TypeScript configuration
-└── README.md              # This file
-```
-
-## Development
-
 ### Core Library Development
 
 ```bash
@@ -717,14 +717,14 @@ cd docs
 # Install dependencies
 npm install
 
-# Start development server (usually runs on port 3000 or 3001)
+# Start development server (usually runs on port 3000)
 npm run dev
 
 # Build for production
 npm run build
 ```
 
-## �🙏 Acknowledgments
+## 🙏 Acknowledgments
 
 - Built on [Ant Design Pro Components](https://procomponents.ant.design/)
 - Inspired by modern data table patterns
@@ -732,6 +732,6 @@ npm run build
 
 ## 📞 Support
 
-- **Documentation & Preview**: [http://localhost:3001](http://localhost:3001)
-- **Issues**: [GitHub Issues](https://github.com/your-org/flo-table-with-views/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/your-org/flo-table-with-views/discussions)
+- **Documentation & Preview**: [https://flotable-docs.vercel.app](https://flotable-docs.vercel.app)
+- **Issues**: [GitHub Issues](https://github.com/Fladeed/FloTable/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/Fladeed/FloTable/discussions)
